@@ -69,13 +69,26 @@ class _LoginPageState extends State<LoginPage> {
             ? Center(child: LoadingCircle)
             : ListView(
                 children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(15.0, 110.0, 0.0, 0.0),
-                    child: Text('Welcome to IIT(BHU)\'s Workshops App.',
-                        style: TextStyle(
-                            fontSize: 40.0, fontWeight: FontWeight.bold)),
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        height: 400,
+                        width: MediaQuery.of(context).size.width * 1,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('assets/IIT BHU.jpg'),
+                                fit: BoxFit.cover)),
+                        padding: EdgeInsets.fromLTRB(0.0, 110.0, 0.0, 0.0),
+                        child: Text(' Welcome to IIT(BHU) ',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 40.0,
+                                fontWeight: FontWeight.w600)),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 15),
+                  SizedBox(height: 10),
                   OutlinedButton(
                     style: outlineButtonStyle.copyWith(
                       shape: MaterialStateProperty.all<OutlinedBorder>(
@@ -127,52 +140,50 @@ class _LoginPageState extends State<LoginPage> {
                             padding: const EdgeInsets.only(left: 10),
                             child: Text(
                               'Sign in with Google',
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.black),
                             ),
                           )
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(height: 15.0),
+                  SizedBox(height: 10.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
                         'Login Using Institute ID.',
-                        style: TextStyle(fontFamily: 'Montserrat'),
+                        //style: TextStyle(fontFamily: 'Montserrat'),
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            fontWeight: FontWeight.normal),
                       ),
                     ],
                   ),
-                  SizedBox(height: 150.0),
-                  GestureDetector(
-                    onTap: () async {
-                      await LoginPage.guestLoginSetup();
-
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/home', ModalRoute.withName('/root'));
-                    },
-                    child: CircleAvatar(
-                      radius: 52,
-                      backgroundColor: Colors.purple.withOpacity(0.3),
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundColor: Colors.black.withOpacity(0.8),
-                        child: Center(
-                            child: Text(
-                          'Guest',
-                          style: TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        )),
-                      ),
-                    ),
-                  ),
+                  SizedBox(height: 120.0),
                 ],
               ),
+        floatingActionButton: Container(
+          height: MediaQuery.of(context).size.width * 0.25,
+          width: MediaQuery.of(context).size.width * 0.25,
+          child: FloatingActionButton.extended(
+            onPressed: () async {
+              await LoginPage.guestLoginSetup();
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/home', ModalRoute.withName('/root'));
+            },
+            label: Text(
+              'Guest',
+              style: TextStyle(
+                fontSize: MediaQuery.of(context).size.width * 0.07,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            backgroundColor: Colors.black,
+          ),
+        ),
       ),
     );
   }
