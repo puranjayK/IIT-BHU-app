@@ -105,7 +105,7 @@ class _MyAppState extends State<TheMap> {
   List<Marker> _displayMarkers = <Marker>[];
 
   bool _selectedList = false;
-
+  bool _cameraFocusedOnMarker = false;
   CameraPosition _initialCameraPosition(
       [String workshopLatitude = '', String workshopLongitude = '']) {
     print(workshopLatitude);
@@ -135,6 +135,7 @@ class _MyAppState extends State<TheMap> {
     controller.animateCamera(
       CameraUpdate.newCameraPosition(_camera),
     );
+    _cameraFocusedOnMarker = true;
   }
 
   simpleMoveCameraToMarker(String latitude, String longitude) async {
@@ -309,167 +310,182 @@ class _MyAppState extends State<TheMap> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorConstants.homeBackground,
-      appBar: AppBar(
+    return WillPopScope(
+      onWillPop: ()async{
+        if (!_cameraFocusedOnMarker) {
+          return true;
+        } else {
+          final GoogleMapController controller = await mapController.future;
+          controller.animateCamera(
+              CameraUpdate.newCameraPosition(_initialCameraPosition()));
+          _cameraFocusedOnMarker = false;
+          return false;
+        }
+      },
+      child: Scaffold(
         backgroundColor: ColorConstants.homeBackground,
-        title: Text((widget.fromCreateWorkshop ? 'Workshop Location-' : '') +
-            'IIT BHU Map'),
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        actions: [],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: ColorConstants.homeBackground,
-        onPressed: () {
-          _settingModalBottomSheet(context);
-        },
-        child: Icon(Icons.add, color: Colors.white, size: 30),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: Stack(
-        children: [
-          GoogleMap(
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: widget.fromWorkshopDetails
-                ? _initialCameraPosition(
-                    widget.workshopLatitude, widget.workshopLongitude)
-                : _initialCameraPosition(),
-            mapType: MapType.terrain,
-            mapToolbarEnabled: true,
-            markers: Set.from(_displayMarkers),
-            onTap: (tappedPosition) {
-              print(
-                  'lattitude : ${tappedPosition.latitude}      longitude: ${tappedPosition.longitude}');
-            },
+        appBar: AppBar(
+          backgroundColor: ColorConstants.homeBackground,
+          title: Text((widget.fromCreateWorkshop ? 'Workshop Location-' : '') +
+              'IIT BHU Map'),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.pop(context),
           ),
-          _selectedList
-              ? Positioned(
-                  right: 2,
-                  top: 56,
-                  child: InkWell(
-                    onTap: () async {
-                      setState(() {
-                        _selectedList = false;
-                        _displayMarkers = _allMarkers;
-                      });
+          actions: [],
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: ColorConstants.homeBackground,
+          onPressed: () {
+            _settingModalBottomSheet(context);
+          },
+          child: Icon(Icons.add, color: Colors.white, size: 30),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        body: Stack(
+          children: [
+            GoogleMap(
+              onMapCreated: _onMapCreated,
+              initialCameraPosition: widget.fromWorkshopDetails
+                  ? _initialCameraPosition(
+                      widget.workshopLatitude, widget.workshopLongitude)
+                  : _initialCameraPosition(),
+              mapType: MapType.terrain,
+              mapToolbarEnabled: true,
+              markers: Set.from(_displayMarkers),
+              onTap: (tappedPosition) {
+                print(
+                    'lattitude : ${tappedPosition.latitude}      longitude: ${tappedPosition.longitude}');
+              },
+            ),
+            _selectedList
+                ? Positioned(
+                    right: 2,
+                    top: 56,
+                    child: InkWell(
+                      onTap: () async {
+                        setState(() {
+                          _selectedList = false;
+                          _displayMarkers = _allMarkers;
+                          _cameraFocusedOnMarker = false;
+                        });
 
-                      final GoogleMapController controller =
-                          await mapController.future;
-                      controller.animateCamera(CameraUpdate.newCameraPosition(
-                          _initialCameraPosition()));
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: Colors.black),
-                      child: Text(
-                        'Clear X',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    ),
-                  ),
-                )
-              : Container(),
-          _selectedList
-              ? Positioned(
-                  top: 5,
-                  left: 10,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.black12,
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                          color: Colors.black,
-                          blurRadius: 3,
-                          spreadRadius: 5,
+                        final GoogleMapController controller =
+                            await mapController.future;
+                        controller.animateCamera(CameraUpdate.newCameraPosition(
+                            _initialCameraPosition()));
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: Colors.black),
+                        child: Text(
+                          'Clear X',
+                          style: TextStyle(color: Colors.red),
                         ),
-                      ],
-                    ),
-                    height: 44,
-                    width: MediaQuery.of(context).size.width - 20,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _displayMarkers.length,
-                        itemBuilder: (context, index) {
-                          Marker _tappableMarker = _displayMarkers[index];
-                          List<Text> textList = [];
-
-                          for (var text
-                              in _tappableMarker.infoWindow.title.split(' ')) {
-                            textList.add(Text(text,
-                                style: TextStyle(color: Colors.white)));
-                          }
-
-                          return InkWell(
-                            onTap: () async {
-                              final GoogleMapController controller =
-                                  await mapController.future;
-                              controller.animateCamera(
-                                CameraUpdate.newCameraPosition(
-                                  CameraPosition(
-                                    target: _tappableMarker.position,
-                                    zoom: 18,
-                                    tilt: 75.0,
-                                    bearing: Random().nextDouble() * 90,
-                                  ),
-                                ),
-                              );
-                              if (widget.fromCreateWorkshop) {
-                                print(_displayMarkers[index]);
-                                bool shouldLocationbeSet = await locationSetDialog(
-                                    context,
-                                    'Location Set',
-                                    'Do you want to set ${_displayMarkers[index].infoWindow.title} as the location for the workshop/event?');
-                                if (shouldLocationbeSet == true) {
-                                  Navigator.pop(context, [
-                                    _displayMarkers[index]
-                                        .position
-                                        .latitude
-                                        .toStringAsFixed(6),
-                                    _displayMarkers[index]
-                                        .position
-                                        .longitude
-                                        .toStringAsFixed(6),
-                                    _displayMarkers[index]
-                                        .infoWindow
-                                        .title
-                                        .toString(),
-                                  ]);
-                                }
-                              }
-                            },
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 6, 8, 6),
-                              padding: EdgeInsets.fromLTRB(8, 6, 8, 6),
-                              decoration: BoxDecoration(
-                                color: ColorConstants.homeBackground,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Text(
-                                _tappableMarker.infoWindow.title,
-                                style: TextStyle(color: Colors.white)
-                                //  Column(
-                                //   children: textList,
-                                // )
-                                ,
-                              ),
-                            ),
-                          );
-                        },
                       ),
                     ),
-                  ),
-                )
-              : Container(),
-        ],
+                  )
+                : Container(),
+            _selectedList
+                ? Positioned(
+                    top: 5,
+                    left: 10,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.black12,
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 3,
+                            spreadRadius: 5,
+                          ),
+                        ],
+                      ),
+                      height: 44,
+                      width: MediaQuery.of(context).size.width - 20,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _displayMarkers.length,
+                          itemBuilder: (context, index) {
+                            Marker _tappableMarker = _displayMarkers[index];
+                            List<Text> textList = [];
+
+                            for (var text
+                                in _tappableMarker.infoWindow.title.split(' ')) {
+                              textList.add(Text(text,
+                                  style: TextStyle(color: Colors.white)));
+                            }
+
+                            return InkWell(
+                              onTap: () async {
+                                final GoogleMapController controller =
+                                    await mapController.future;
+                                controller.animateCamera(
+                                  CameraUpdate.newCameraPosition(
+                                    CameraPosition(
+                                      target: _tappableMarker.position,
+                                      zoom: 18,
+                                      tilt: 75.0,
+                                      bearing: Random().nextDouble() * 90,
+                                    ),
+                                  ),
+                                );
+                                _cameraFocusedOnMarker = true;
+                                if (widget.fromCreateWorkshop) {
+                                  print(_displayMarkers[index]);
+                                  bool shouldLocationbeSet = await locationSetDialog(
+                                      context,
+                                      'Location Set',
+                                      'Do you want to set ${_displayMarkers[index].infoWindow.title} as the location for the workshop/event?');
+                                  if (shouldLocationbeSet == true) {
+                                    Navigator.pop(context, [
+                                      _displayMarkers[index]
+                                          .position
+                                          .latitude
+                                          .toStringAsFixed(6),
+                                      _displayMarkers[index]
+                                          .position
+                                          .longitude
+                                          .toStringAsFixed(6),
+                                      _displayMarkers[index]
+                                          .infoWindow
+                                          .title
+                                          .toString(),
+                                    ]);
+                                  }
+                                }
+                              },
+                              child: Container(
+                                margin: EdgeInsets.fromLTRB(0, 6, 8, 6),
+                                padding: EdgeInsets.fromLTRB(8, 6, 8, 6),
+                                decoration: BoxDecoration(
+                                  color: ColorConstants.homeBackground,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Text(
+                                  _tappableMarker.infoWindow.title,
+                                  style: TextStyle(color: Colors.white)
+                                  //  Column(
+                                  //   children: textList,
+                                  // )
+                                  ,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  )
+                : Container(),
+          ],
+        ),
       ),
     );
   }
