@@ -157,7 +157,9 @@ class SideBar extends Drawer {
                         await SharedPreferences.getInstance();
                     await prefs.clear();
                     AppConstants.isGuest = false;
-                    Navigator.of(context).pushReplacementNamed('/login');
+                    // Navigator.of(context).pushReplacementNamed('/login');
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil('/login', (route) => false);
                   }
                 } else {
                   await AppConstants.deleteLocalDatabaseOnly();
@@ -165,7 +167,9 @@ class SideBar extends Drawer {
                       await SharedPreferences.getInstance();
                   await prefs.clear();
                   AppConstants.isGuest = false;
-                  Navigator.of(context).pushReplacementNamed('/login');
+                  // Navigator.of(context).pushReplacementNamed('/login');
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/login', (route) => false);
                 }
               },
             ),
