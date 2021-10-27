@@ -311,7 +311,7 @@ class _MyAppState extends State<TheMap> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ()async{
+      onWillPop: () async {
         if (!_cameraFocusedOnMarker) {
           return true;
         } else {
@@ -335,12 +335,12 @@ class _MyAppState extends State<TheMap> {
           ),
           actions: [],
         ),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton.extended(
           backgroundColor: ColorConstants.homeBackground,
           onPressed: () {
             _settingModalBottomSheet(context);
           },
-          child: Icon(Icons.add, color: Colors.white, size: 30),
+          label: Text("Popular \u{1F4CC}"),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         body: Stack(
@@ -416,8 +416,8 @@ class _MyAppState extends State<TheMap> {
                             Marker _tappableMarker = _displayMarkers[index];
                             List<Text> textList = [];
 
-                            for (var text
-                                in _tappableMarker.infoWindow.title.split(' ')) {
+                            for (var text in _tappableMarker.infoWindow.title
+                                .split(' ')) {
                               textList.add(Text(text,
                                   style: TextStyle(color: Colors.white)));
                             }
@@ -439,10 +439,11 @@ class _MyAppState extends State<TheMap> {
                                 _cameraFocusedOnMarker = true;
                                 if (widget.fromCreateWorkshop) {
                                   print(_displayMarkers[index]);
-                                  bool shouldLocationbeSet = await locationSetDialog(
-                                      context,
-                                      'Location Set',
-                                      'Do you want to set ${_displayMarkers[index].infoWindow.title} as the location for the workshop/event?');
+                                  bool shouldLocationbeSet =
+                                      await locationSetDialog(
+                                          context,
+                                          'Location Set',
+                                          'Do you want to set ${_displayMarkers[index].infoWindow.title} as the location for the workshop/event?');
                                   if (shouldLocationbeSet == true) {
                                     Navigator.pop(context, [
                                       _displayMarkers[index]
