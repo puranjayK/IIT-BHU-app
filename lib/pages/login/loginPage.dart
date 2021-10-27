@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:iit_app/external_libraries/spin_kit.dart';
 import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/model/deprecatedWidgetsStyle.dart';
@@ -68,34 +69,68 @@ class _LoginPageState extends State<LoginPage> {
         body: _loading
             ? Center(child: LoadingCircle)
             : ListView(
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Container(
-                        height: 400,
-                        width: MediaQuery.of(context).size.width * 1,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage('assets/IIT BHU.jpg'),
-                                fit: BoxFit.cover)),
-                        padding: EdgeInsets.fromLTRB(0.0, 110.0, 0.0, 0.0),
-                        child: Text(' Welcome to IIT(BHU) ',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 40.0,
-                                fontWeight: FontWeight.w600)),
+          children: <Widget>[
+            SizedBox(height: 10,),
+            Column(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: CircleAvatar(
+                        radius: 30,
+                        backgroundImage: AssetImage('assets/COPS.png'),
                       ),
-                    ],
+                    )
+                  ],
+                ),
+                SizedBox(height: 50,),
+                Container(
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          offset: Offset(1,1),
+                          color: Colors.black,
+                          spreadRadius: 2,
+                          blurRadius: 2,
+                        )
+                      ]
                   ),
-                  SizedBox(height: 10),
-                  OutlinedButton(
-                    style: outlineButtonStyle.copyWith(
-                      shape: MaterialStateProperty.all<OutlinedBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40)),
-                      ),
-                      side: MaterialStateProperty.resolveWith<BorderSide>(
+                  child: CircleAvatar(
+                    radius: 140,
+                    backgroundImage: AssetImage('assets/LoginPageImage.jpg'),
+                  ),
+                ),
+                SizedBox(height: 20,),
+                Text(' Welcome to IIT(BHU) ',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.halant(
+                      shadows: [
+                        Shadow(
+                          color: Colors.black,
+                          offset: Offset(1.0,1.0),
+                          blurRadius: 1,
+                        )
+                      ],
+                      color: Colors.black,
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.w600
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.only(left: 30,right: 30),
+              child: OutlinedButton(
+                style: outlineButtonStyle.copyWith(
+                  shape: MaterialStateProperty.all<OutlinedBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40)),
+                  ),
+                  side: MaterialStateProperty.resolveWith<BorderSide>(
                           (states) {
                         if (states.contains(MaterialState.pressed))
                           return BorderSide(
@@ -104,67 +139,76 @@ class _LoginPageState extends State<LoginPage> {
                           );
                         return BorderSide(color: Colors.grey);
                       }),
-                      elevation:
-                          MaterialStateProperty.resolveWith<double>((states) {
-                        if (states.contains(MaterialState.pressed)) return 0.0;
-                        return null;
-                      }),
-                      overlayColor: MaterialStateProperty.resolveWith(
+                  elevation:
+                  MaterialStateProperty.resolveWith<double>((states) {
+                    if (states.contains(MaterialState.pressed)) return 0.0;
+                    return null;
+                  }),
+                  overlayColor: MaterialStateProperty.resolveWith(
                         (states) {
-                          if (states.contains(MaterialState.pressed))
-                            return Colors.grey;
-                          return null;
-                        },
-                      ),
-                      foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                        (states) {
-                          if (states.contains(MaterialState.pressed))
-                            return Colors.grey[400];
-                          return Colors.grey;
-                        },
-                      ),
-                    ),
-                    onPressed: AppConstants.logInButtonEnabled == false
-                        ? null
-                        : () => _signInWithGoogle(),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Image(
-                              image: AssetImage("assets/google_logo.png"),
-                              height: 25.0),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Text(
-                              'Sign in with Google',
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.black),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                      if (states.contains(MaterialState.pressed))
+                        return Colors.grey;
+                      return null;
+                    },
                   ),
-                  SizedBox(height: 10.0),
-                  Row(
+                  foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (states) {
+                      if (states.contains(MaterialState.pressed))
+                        return Colors.grey[400];
+                      return Colors.grey;
+                    },
+                  ),
+                ),
+                onPressed: AppConstants.logInButtonEnabled == false
+                    ? null
+                    : () => _signInWithGoogle(),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 13, 0, 13),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        'Login Using Institute ID.',
-                        //style: TextStyle(fontFamily: 'Montserrat'),
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            fontWeight: FontWeight.normal),
-                      ),
+                      Image(
+                          image: AssetImage("assets/google_logo.png"),
+                          height: 25.0),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          'Sign in with Google',
+                          style:
+                          TextStyle(fontSize: 20, color: Colors.black),
+                        ),
+                      )
                     ],
                   ),
-                  SizedBox(height: 120.0),
-                ],
+                ),
               ),
+            ),
+            SizedBox(height: 10.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Login Using ',
+                  //style: TextStyle(fontFamily: 'Montserrat'),
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400),
+                ),
+                Text(
+                  'Institute ID.',
+                  //style: TextStyle(fontFamily: 'Montserrat'),
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            SizedBox(height: 120.0),
+          ],
+        ),
         floatingActionButton: Container(
           height: MediaQuery.of(context).size.width * 0.25,
           width: MediaQuery.of(context).size.width * 0.25,

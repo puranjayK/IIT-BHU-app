@@ -49,7 +49,7 @@ dependencies:
   flushbar: ^1.10.4
   clippy_flutter: ^1.1.1
   firebase_dynamic_links: ^0.6.3
-
+  google_fonts:
   package_info: ^0.4.3+2
 
 dev_dependencies:
