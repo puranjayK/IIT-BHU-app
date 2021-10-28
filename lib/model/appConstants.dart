@@ -33,7 +33,7 @@ class AppConstants {
   // static Stream connectivityStream;
 
   // ------------------------------------------ connectivity variables
-
+  static bool guestButtonEnabled = true;
   static bool logInButtonEnabled = true;
   static bool firstTimeFetching = true;
 

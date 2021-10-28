@@ -75,5 +75,6 @@ Future<void> signOutGoogle() async {
   await FirebaseAuth.instance.signOut();
   AppConstants.djangoToken = null;
   AppConstants.unsubscribeAll();
+  AppConstants.guestButtonEnabled=true;
   print("User Sign Out");
 }

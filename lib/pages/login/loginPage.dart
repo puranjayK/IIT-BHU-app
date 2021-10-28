@@ -161,7 +161,11 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 onPressed: AppConstants.logInButtonEnabled == false
                     ? null
-                    : () => _signInWithGoogle(),
+                    : () {
+                       _signInWithGoogle();
+                       AppConstants.guestButtonEnabled=false;
+                    },
+
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(0, 13, 0, 13),
                   child: Row(
@@ -209,7 +213,12 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 120.0),
           ],
         ),
-        floatingActionButton: Container(
+
+        floatingActionButton:Visibility(
+          visible: AppConstants.guestButtonEnabled
+                  ? true
+                  : false ,
+          child: Container(
           height: MediaQuery.of(context).size.width * 0.25,
           width: MediaQuery.of(context).size.width * 0.25,
           child: FloatingActionButton.extended(
@@ -226,6 +235,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             backgroundColor: Colors.black,
+            ),
           ),
         ),
       ),
@@ -249,6 +259,7 @@ class _LoginPageState extends State<LoginPage> {
       if (_user == null || AppConstants.djangoToken == null) {
         setState(() {
           this._loading = false;
+          AppConstants.guestButtonEnabled=true;
         });
 
         await authentication.signOutGoogle();
@@ -256,6 +267,7 @@ class _LoginPageState extends State<LoginPage> {
         return errorDialog(context);
       } else {
         // logged in successfully :)
+        AppConstants.guestButtonEnabled=false;
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString(
