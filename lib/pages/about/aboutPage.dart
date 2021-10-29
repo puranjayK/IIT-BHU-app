@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:iit_app/data/internet_connection_interceptor.dart';
@@ -5,7 +6,6 @@ import 'package:iit_app/external_libraries/spin_kit.dart';
 import 'package:iit_app/external_libraries/url_launcher.dart';
 import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/model/built_post.dart';
-import 'package:built_collection/built_collection.dart';
 import 'package:iit_app/model/colorConstants.dart';
 import 'package:iit_app/ui/drawer.dart';
 import 'package:iit_app/ui/text_style.dart';
@@ -39,6 +39,7 @@ class _AboutPageState extends State<AboutPage> {
   }
 
   final space = SizedBox(height: 8.0);
+
   Widget template({String imageUrl, String name, String desg}) {
     return Expanded(
       child: Container(
@@ -73,10 +74,31 @@ class _AboutPageState extends State<AboutPage> {
     );
   }
 
+  showImage(String photoUrl) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: Container(
+              width: MediaQuery.of(context).size.width *0.8,
+              height: MediaQuery.of(context).size.height *0.45,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: photoUrl == ''
+                      ? AssetImage('assets/AMC.png')
+                      : NetworkImage(photoUrl),
+                )
+              ),
+            ),
+          );
+        });
+  }
+
   final divide = Divider(
       height: 8.0,
       thickness: 2.0,
       color: ColorConstants.circularRingBackground);
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -144,28 +166,32 @@ class _AboutPageState extends State<AboutPage> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: teamData[index].team_members.length,
                             itemBuilder: (context, index2) {
+                              String _photoUrl;
+                              _photoUrl = teamData[index]
+                                              .team_members[index2]
+                                              .github_image_url ==
+                                          null ||
+                                      teamData[index]
+                                              .team_members[index2]
+                                              .github_image_url ==
+                                          ''
+                                  ? ''
+                                  : teamData[index]
+                                      .team_members[index2]
+                                      .github_image_url;
                               return ListTile(
                                 leading: GestureDetector(
-                                  onTap: () => openGithub(teamData[index]
-                                      .team_members[index2]
-                                      .github_username),
+                                  onTap: () {
+                                    showImage(_photoUrl);
+                                  },
                                   child: Container(
                                     height: 50.0,
                                     width: 50.0,
                                     decoration: BoxDecoration(
                                         image: DecorationImage(
-                                          image: teamData[index]
-                                                          .team_members[index2]
-                                                          .github_image_url ==
-                                                      null ||
-                                                  teamData[index]
-                                                          .team_members[index2]
-                                                          .github_image_url ==
-                                                      ''
+                                          image: _photoUrl == ''
                                               ? AssetImage('assets/AMC.png')
-                                              : NetworkImage(teamData[index]
-                                                  .team_members[index2]
-                                                  .github_image_url),
+                                              : NetworkImage(_photoUrl),
                                           fit: BoxFit.fill,
                                         ),
                                         borderRadius: BorderRadius.all(
@@ -196,12 +222,33 @@ class _AboutPageState extends State<AboutPage> {
                                         height: 50.0,
                                         child: Center(
                                           child: Text(
-                                              teamData[index]
-                                                  .team_members[index2]
-                                                  .name,
-                                              style: Style.titleTextStyle),
+                                            teamData[index]
+                                                .team_members[index2]
+                                                .name,
+                                            style: Style.titleTextStyle,
+                                            textAlign: TextAlign.center,
+                                          ),
                                         ),
                                       ),
+                                    ),
+                                  ),
+                                ),
+                                trailing: GestureDetector(
+                                  onTap: () => openGithub(teamData[index]
+                                      .team_members[index2]
+                                      .github_username),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.orange,
+                                          width: 1.5,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(23)),
+                                    child: CircleAvatar(
+                                      radius: 22,
+                                      backgroundImage:
+                                          AssetImage('assets/githubLogo1.png'),
                                     ),
                                   ),
                                 ),
