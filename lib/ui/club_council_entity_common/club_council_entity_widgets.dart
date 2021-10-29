@@ -237,8 +237,14 @@ class ClubCouncilAndEntityWidgets {
                     ? Colors.white.withOpacity(0.5)
                     : Colors.white),
           ),
-          onPressed:
-              _disableMuteButton // disable mute button if not subscribed in case of club/entity.
+          onPressed: AppConstants.isGuest
+              ? () {
+                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                  var snackbar =
+                      SnackBar(content: Text("Please Log in to Mute"));
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                }
+              : _disableMuteButton // disable mute button if not subscribed in case of club/entity.
                   ? null
                   : () async {
                       if (!toggling) {
@@ -471,8 +477,14 @@ class ClubCouncilAndEntityWidgets {
                     ? Colors.white.withOpacity(0.5)
                     : Colors.white),
           ),
-          onPressed:
-              _disableUnmuteButton // disable unmute button if already subscribed in case of club/entity.
+          onPressed: AppConstants.isGuest
+              ? () {
+                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                  var snackbar =
+                      SnackBar(content: Text("Please Log in to Unmute"));
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                }
+              : _disableUnmuteButton // disable unmute button if already subscribed in case of club/entity.
                   ? null
                   : () async {
                       if (!toggling) {
@@ -722,19 +734,24 @@ class ClubCouncilAndEntityWidgets {
           decoration: BoxDecoration(
               color: ColorConstants.workshopCardContainer,
               borderRadius: BorderRadius.circular(30.0)),
-          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: <
-              Widget>[
-            SizedBox(width: 7.0),
-            Text(
-              '${data.subscribed_users}',
-              style: TextStyle(fontSize: 14.0, color: ColorConstants.textColor),
-            ),
-            SizedBox(width: 15),
-            Icon(Icons.person,
-                color: AppConstants.isGuest? Colors.blue[100]:
-                        data.is_subscribed ? Colors.blue[400] : Colors.blue[100],
-                size: 25.0),
-          ]))
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(width: 7.0),
+                Text(
+                  '${data.subscribed_users}',
+                  style: TextStyle(
+                      fontSize: 14.0, color: ColorConstants.textColor),
+                ),
+                SizedBox(width: 15),
+                Icon(Icons.person,
+                    color: AppConstants.isGuest
+                        ? Colors.blue[100]
+                        : data.is_subscribed
+                            ? Colors.blue[400]
+                            : Colors.blue[100],
+                    size: 25.0),
+              ]))
     ]);
   }
 
