@@ -731,7 +731,8 @@ class ClubCouncilAndEntityWidgets {
             ),
             SizedBox(width: 15),
             Icon(Icons.person,
-                color: data.is_subscribed ? Colors.blue[400] : Colors.blue[100],
+                color: AppConstants.isGuest? Colors.blue[100]:
+                        data.is_subscribed ? Colors.blue[400] : Colors.blue[100],
                 size: 25.0),
           ]))
     ]);
