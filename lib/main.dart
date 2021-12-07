@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:iit_app/model/colorConstants.dart';
 import 'package:iit_app/pages/Init_Root/initiation.dart';
 import 'package:iit_app/pages/Init_Root/root.dart';
+import 'package:iit_app/pages/academics/academicsPage.dart';
 import 'package:iit_app/pages/allEntities/allEntitiesPage.dart';
 import 'package:iit_app/pages/map/mapPage.dart';
 import 'package:iit_app/pages/mess/mess.dart';
@@ -41,6 +42,7 @@ void main() async {
 
       '/home': (BuildContext context) => HomePage(),
       '/mapPage': (BuildContext context) => MapPage(),
+      '/academicsPage':(BuildContext context) =>AcademicsPage(),
       '/mess': (BuildContext context) => MessScreen(),
       '/allWorkshops': (BuildContext context) => AllWorkshopsScreen(),
       '/allEntities': (BuildContext context) => EntitiesPage(),
