@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iit_app/pages/newhomescreen/events.dart';
+import 'package:iit_app/pages/newhomescreen/search.dart';
 
 class NewHomeScreen extends StatefulWidget {
   @override
@@ -68,6 +69,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                 textStyle:
                     TextStyle(fontSize: 14, height: 2.0, letterSpacing: 0.1),
                 fontWeight: FontWeight.w500,
+                color: Color(0xFF176ede),
               ),
               key: Key("buy_subject_input"),
               focusNode: focusNode,
@@ -82,6 +84,12 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                   color: Color(0xFF176ede),
                 ),
               ),
+              onSubmitted: (value) {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Search(
+                          searchVal: value,
+                        )));
+              },
             ),
           ),
         ),
