@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:iit_app/external_libraries/fab_circular_menu.dart';
 import 'package:iit_app/pages/newHomepage/notice_board.dart';
+import 'package:iit_app/pages/newHomepage/noticeboard_data.dart';
 import 'package:iit_app/screens/home_FAB.dart';
 
 class HomePage extends StatelessWidget {
@@ -32,7 +33,7 @@ class HomePage extends StatelessWidget {
             SingleChildScrollView(
               child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.5,
-                child: NoticeBoard(),
+                child: NoticeBoard(getSampleValues()),
               ),
             ),
           ],
