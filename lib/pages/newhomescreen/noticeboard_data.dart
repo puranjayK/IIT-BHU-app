@@ -20,7 +20,7 @@ List<NoticeBoardData> getSampleValues() {
   //sample.sort(((a, b) => a['date'].compareTo(b['date'])));
   List<NoticeBoardData> data = [
     NoticeBoardData(
-        title: 'Pin title',
+        title: 'Regarding Reopening',
         date: DateTime.now(),
         isActive: true,
         isPinned: true),
