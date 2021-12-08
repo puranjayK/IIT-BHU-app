@@ -6,7 +6,7 @@ class Events extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Padding(
-        padding: const EdgeInsets.only(left: 15.0),
+        padding: const EdgeInsets.only(left: 14.0),
         child: Row(
           children: [
             EventCard(

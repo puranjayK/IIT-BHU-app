@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class NoticeBoardData {
   String title;
   DateTime date;
@@ -38,12 +36,12 @@ List<NoticeBoardData> getSampleValues() {
         isPinned: true),
     NoticeBoardData(
         title: 'Pin title',
-        date: DateTime.tryParse("2021-12-02 20:18:04"),
+        date: DateTime.parse("2021-12-02 20:18:04"),
         isActive: false,
         isPinned: true),
     NoticeBoardData(
         title: 'Pin title',
-        date: DateTime.tryParse("2021-12-06 20:18:04"),
+        date: DateTime.parse("2021-12-06 20:18:04"),
         isActive: true,
         isPinned: true)
   ];

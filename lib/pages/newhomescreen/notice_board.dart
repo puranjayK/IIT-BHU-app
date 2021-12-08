@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iit_app/pages/newHomepage/noticeboard_data.dart';
+import 'package:iit_app/pages/newhomescreen/noticeboard_data.dart';
 import 'package:intl/intl.dart';
 
 class NoticeBoard extends StatefulWidget {
@@ -25,23 +25,36 @@ class _NoticeBoardState extends State<NoticeBoard> {
       return ListView.builder(
         itemCount: widget.data.length,
         itemBuilder: (context, item) => Container(
-          height: 60,
+          height: 58.0,
           margin: const EdgeInsets.all(4.0),
-          padding: const EdgeInsets.all(8),
+          padding:
+              const EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 10),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(
               Radius.circular(10),
             ),
-            color:
-                widget.data[item].isPinned ? Colors.blue[100] : Colors.blue[50],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.blueGrey.shade50,
+                offset: const Offset(
+                  1.0,
+                  1.0,
+                ), //Offset
+                blurRadius: 3.0,
+                spreadRadius: 1.0,
+              ),
+            ],
+            color: widget.data[item].isPinned
+                ? Color(0xFFd1e6ff)
+                : Color(0xFFf3f9ff),
           ),
           child: Row(
             children: [
               Icon(
                 Icons.circle,
                 color: widget.data[item].isActive
-                    ? Colors.green[300]
-                    : Colors.red[400],
+                    ? Color(0xFF00d823)
+                    : Color(0xFFff0000),
                 size: 10,
               ),
               const SizedBox(
@@ -54,18 +67,23 @@ class _NoticeBoardState extends State<NoticeBoard> {
                   children: [
                     Text(
                       widget.data[item].title,
-                      style: GoogleFonts.lato(
+                      style: GoogleFonts.montserrat(
                         textStyle: TextStyle(
-                          color: Color(0xFF176ede),
-                          letterSpacing: .2,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF1d72df),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
                         ),
                       ),
                     ),
                     Text(
                       _dateFormatter(widget.data[item].date),
-                      style: TextStyle(color: Colors.blue[700]),
+                      style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                          color: Color(0xFF1d72df),
+                          fontWeight: FontWeight.w200,
+                          fontSize: 13,
+                        ),
+                      ),
                     ),
                   ],
                 ),
