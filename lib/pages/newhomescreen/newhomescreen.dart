@@ -172,7 +172,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
               children: [
                 SingleChildScrollView(
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.54,
+                    height: MediaQuery.of(context).size.height * 0.5,
                     child: NoticeBoard(getSampleValues()),
                   ),
                 ),
