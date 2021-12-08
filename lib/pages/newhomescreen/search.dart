@@ -8,7 +8,8 @@ class Search extends StatelessWidget {
 
   _searchList() {
     final data = getSampleValues()
-        .where((element) => element.title.toLowerCase().startsWith(searchVal))
+        .where((element) =>
+            element.title.toLowerCase().contains(searchVal.toLowerCase()))
         .toList();
     return data;
   }
