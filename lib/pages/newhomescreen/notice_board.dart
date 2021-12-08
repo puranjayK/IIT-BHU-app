@@ -21,7 +21,7 @@ class _NoticeBoardState extends State<NoticeBoard> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.data != null) {
+    if (widget.data.isNotEmpty) {
       return ListView.builder(
         itemCount: widget.data.length,
         itemBuilder: (context, item) => Container(
@@ -103,7 +103,17 @@ class _NoticeBoardState extends State<NoticeBoard> {
         ),
       );
     } else {
-      return Center(child: Text("Nothing Found"));
+      return Center(
+          child: Text(
+        "No Results Found",
+        style: GoogleFonts.montserrat(
+          textStyle: TextStyle(
+            color: Color(0xFF1d72df),
+            fontWeight: FontWeight.w400,
+            fontSize: 25,
+          ),
+        ),
+      ));
     }
   }
 
