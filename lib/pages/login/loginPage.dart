@@ -69,7 +69,6 @@ class _LoginPageState extends State<LoginPage> {
         body: _loading
             ? Center(child: LoadingCircle)
             : ListView(
-                physics: const NeverScrollableScrollPhysics(),
                 children: <Widget>[
                   SizedBox(
                     height: 10,
