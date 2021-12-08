@@ -73,7 +73,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                       padding: const EdgeInsets.only(right: 5.0),
                       child: ClipOval(
                         child: Image.asset(
-                          'assets/profile.jpeg',
+                          'assets/exampleprofile.jpeg',
                           height: 42.0,
                           fit: BoxFit.cover,
                         ),
