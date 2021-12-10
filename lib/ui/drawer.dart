@@ -110,7 +110,6 @@ class SideBar extends Drawer {
                 Icons.group_work, "All Workshops and Events", '/allWorkshops'),
             getNavItem(
                 Icons.work_rounded, 'All Entities and Fests', '/allEntities'),
-            getNavItem(Icons.chrome_reader_mode_rounded, "Academics", '/academicsPage'),
             _getActiveEntities(),
             AppConstants.isGuest
                 ? ListTile(
