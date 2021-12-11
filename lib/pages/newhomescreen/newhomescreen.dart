@@ -17,19 +17,20 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
   // ignore: override_on_non_overriding_member
   FocusNode focusNode = new FocusNode();
   Widget build(BuildContext context) {
+    Size screensize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Color(0xFFffffff),
       floatingActionButton: FabCircularMenu(
           fabMargin: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height * 0.025,
-              right: MediaQuery.of(context).size.width * 0.03),
+              bottom: screensize.height * 0.025,
+              right: screensize.width * 0.03),
           fabIconBorder: CircleBorder(),
           fabSize: 55.0,
           fabElevation: 8.0,
           animationDuration: Duration(milliseconds: 800),
           ringColor: Color(0xFFb9d8ff),
-          ringDiameter: MediaQuery.of(context).size.width * 0.54,
-          ringWidth: (MediaQuery.of(context).size.width * 0.8) / 6.6,
+          ringDiameter: screensize.width * 0.54,
+          ringWidth: (screensize.width * 0.8) / 6.6,
           fabOpenIcon: Icon(
             Icons.menu_rounded,
             color: Color(0xFF176ede),
@@ -61,36 +62,10 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
             onPressed: () {},
           ),
         ),
-        // actions: [
-        //   GestureDetector(
-        //     onTap: null,
-        //     child: Container(
-        //       width: MediaQuery.of(context).size.width * 0.12,
-        //       margin: EdgeInsets.only(top: 7.5, right: 8.0),
-        //       child: Stack(
-        //         children: [
-        //           Positioned(
-        //             child: Padding(
-        //               padding: const EdgeInsets.only(right: 5.0),
-        //               child: ClipOval(
-        //                 child: Image.asset(
-        //                   'assets/exampleprofile.jpeg',
-        //                   height: 42.0,
-        //                   fit: BoxFit.cover,
-        //                 ),
-        //               ),
-        //             ),
-        //           ),
-        //           Positioned(right: 10.0, child: Online()),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // ],
         title: Row(
           children: [
             Container(
-              width: MediaQuery.of(context).size.width * 0.65,
+              width: screensize.width * 0.65,
               decoration: BoxDecoration(
                 color: Color(0xFFb9d8ff),
                 borderRadius: BorderRadius.circular(40.0),
@@ -128,7 +103,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
               ),
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.04,
+              width: screensize.width * 0.04,
             ),
             Container(
               padding: EdgeInsets.all(8),
@@ -144,7 +119,6 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                   fit: BoxFit.fill,
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                border: Border.all(color: Colors.blueGrey, width: 2.0),
               ),
             )
           ],
@@ -197,7 +171,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
               children: [
                 SingleChildScrollView(
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.5,
+                    height: screensize.height * 0.5,
                     child: NoticeBoard(getSampleValues()),
                   ),
                 ),
