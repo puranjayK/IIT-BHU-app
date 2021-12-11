@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
+import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/pages/newhomescreen/events.dart';
 import 'package:iit_app/pages/newhomescreen/notice_board.dart';
 import 'package:iit_app/pages/newhomescreen/noticeboard_data.dart';
@@ -60,69 +61,93 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
             onPressed: () {},
           ),
         ),
-        actions: [
-          GestureDetector(
-            onTap: null,
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.12,
-              margin: EdgeInsets.only(top: 7.5, right: 8.0),
-              child: Stack(
-                children: [
-                  Positioned(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 5.0),
-                      child: ClipOval(
-                        child: Image.asset(
-                          'assets/exampleprofile.jpeg',
-                          height: 42.0,
-                          fit: BoxFit.cover,
+        // actions: [
+        //   GestureDetector(
+        //     onTap: null,
+        //     child: Container(
+        //       width: MediaQuery.of(context).size.width * 0.12,
+        //       margin: EdgeInsets.only(top: 7.5, right: 8.0),
+        //       child: Stack(
+        //         children: [
+        //           Positioned(
+        //             child: Padding(
+        //               padding: const EdgeInsets.only(right: 5.0),
+        //               child: ClipOval(
+        //                 child: Image.asset(
+        //                   'assets/exampleprofile.jpeg',
+        //                   height: 42.0,
+        //                   fit: BoxFit.cover,
+        //                 ),
+        //               ),
+        //             ),
+        //           ),
+        //           Positioned(right: 10.0, child: Online()),
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ],
+        title: Row(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width * 0.65,
+              decoration: BoxDecoration(
+                color: Color(0xFFb9d8ff),
+                borderRadius: BorderRadius.circular(40.0),
+              ),
+              height: 40,
+              child: Center(
+                child: TextField(
+                  style: GoogleFonts.notoSans(
+                    textStyle: TextStyle(
+                        fontSize: 14, height: 2.0, letterSpacing: 0.1),
+                    fontWeight: FontWeight.w500,
+                  ),
+                  focusNode: focusNode,
+                  textAlign: TextAlign.start,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(vertical: 2.0),
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    prefixIcon: Icon(
+                      Icons.search_rounded,
+                      size: 30.0,
+                      color: Color(0xFF176ede),
+                    ),
+                  ),
+                  onSubmitted: (value) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => Search(
+                          searchVal: value,
                         ),
                       ),
-                    ),
-                  ),
-                  Positioned(right: 10.0, child: Online()),
-                ],
-              ),
-            ),
-          ),
-        ],
-        title: Container(
-          width: MediaQuery.of(context).size.width * 0.65,
-          decoration: BoxDecoration(
-            color: Color(0xFFb9d8ff),
-            borderRadius: BorderRadius.circular(40.0),
-          ),
-          height: 40,
-          child: Center(
-            child: TextField(
-              style: GoogleFonts.notoSans(
-                textStyle:
-                    TextStyle(fontSize: 14, height: 2.0, letterSpacing: 0.1),
-                fontWeight: FontWeight.w500,
-              ),
-              focusNode: focusNode,
-              textAlign: TextAlign.start,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(vertical: 2.0),
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                prefixIcon: Icon(
-                  Icons.search_rounded,
-                  size: 30.0,
-                  color: Color(0xFF176ede),
+                    );
+                  },
                 ),
               ),
-              onSubmitted: (value) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => Search(
-                      searchVal: value,
-                    ),
-                  ),
-                );
-              },
             ),
-          ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.04,
+            ),
+            Container(
+              padding: EdgeInsets.all(8),
+              height: 38.0,
+              width: 38.0,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: (AppConstants.currentUser == null ||
+                          AppConstants.isGuest == true ||
+                          AppConstants.currentUser.photo_url == '')
+                      ? AssetImage('assets/guest.png')
+                      : NetworkImage(AppConstants.currentUser.photo_url),
+                  fit: BoxFit.fill,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                border: Border.all(color: Colors.blueGrey, width: 2.0),
+              ),
+            )
+          ],
         ),
       ),
       body: ListView(
@@ -133,7 +158,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
               padding:
                   const EdgeInsets.only(left: 18.0, top: 10.0, bottom: 8.0),
               child: Text(
-                'Ongoing Events',
+                'Events',
                 style: TextStyle(
                   fontFamily: 'Gilroy',
                   color: Color(0xFF176ede),
