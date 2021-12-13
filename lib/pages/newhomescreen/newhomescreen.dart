@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/pages/newhomescreen/events.dart';
+import './events.dart' as buildWorkshop;
 import 'package:iit_app/pages/newhomescreen/notice_board.dart';
 import 'package:iit_app/pages/newhomescreen/noticeboard_data.dart';
 import 'package:iit_app/pages/newhomescreen/search.dart';
@@ -13,6 +14,7 @@ class NewHomeScreen extends StatefulWidget {
 }
 
 class _NewHomeScreenState extends State<NewHomeScreen> {
+  ValueNotifier<bool> searchListener = ValueNotifier(true);
   @override
   // ignore: override_on_non_overriding_member
   FocusNode focusNode = new FocusNode();
@@ -107,8 +109,8 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
             ),
             Container(
               padding: EdgeInsets.all(8),
-              height: 38.0,
-              width: 38.0,
+              height: screensize.height * 0.056,
+              width: screensize.width * 0.094,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: (AppConstants.currentUser == null ||
@@ -145,12 +147,16 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
           ),
           Align(
             alignment: Alignment.centerLeft,
-            child: Events(),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 3.0),
+              child:
+                  Container(height: screensize.height * 0.28, child: Events()),
+            ),
           ),
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: const EdgeInsets.only(left: 18.0, top: 5.0, bottom: 8.0),
+              padding: const EdgeInsets.only(left: 18.0, top: 1.0, bottom: 8.0),
               child: Text(
                 'Noticeboard',
                 style: TextStyle(
