@@ -138,7 +138,6 @@ Widget _buildAllWorkshopsBodyPosts(
         height: screensize.height * 0.3,
         child: Expanded(
           child: ListView.builder(
-            // physics: ScrollPhysics(),
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             itemCount: posts.active_workshops.length,
@@ -177,14 +176,12 @@ Widget _buildAllWorkshopsBodyPosts(
         child: Expanded(
           child: ListView.builder(
             shrinkWrap: true,
-            physics: ScrollPhysics(),
             scrollDirection: Axis.horizontal,
             itemCount: posts.past_workshops.length,
             padding: EdgeInsets.only(top: 1.0, right: 10.0),
             itemBuilder: (context, index) {
               final w = posts.past_workshops[index];
               final bool isClub = w.club != null;
-
               var logoFile;
               if (isClub)
                 logoFile = AppConstants.getImageFile(w.club.small_image_url);
