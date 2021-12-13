@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/pages/newhomescreen/events.dart';
-import './events.dart' as buildWorkshop;
 import 'package:iit_app/pages/newhomescreen/notice_board.dart';
 import 'package:iit_app/pages/newhomescreen/noticeboard_data.dart';
 import 'package:iit_app/pages/newhomescreen/search.dart';
@@ -65,6 +64,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
           ),
         ),
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               width: screensize.width * 0.65,
@@ -104,23 +104,23 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                 ),
               ),
             ),
-            SizedBox(
-              width: screensize.width * 0.04,
-            ),
+            // SizedBox(
+            //   width: screensize.width * 0.03,
+            // ),
             Container(
               padding: EdgeInsets.all(8),
               height: screensize.height * 0.056,
               width: screensize.width * 0.094,
               decoration: BoxDecoration(
+                shape: BoxShape.circle,
                 image: DecorationImage(
                   image: (AppConstants.currentUser == null ||
                           AppConstants.isGuest == true ||
                           AppConstants.currentUser.photo_url == '')
                       ? AssetImage('assets/guest.png')
                       : NetworkImage(AppConstants.currentUser.photo_url),
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(20.0)),
               ),
             )
           ],

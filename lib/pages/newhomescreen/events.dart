@@ -2,47 +2,14 @@ import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:iit_app/data/internet_connection_interceptor.dart';
 import 'package:iit_app/model/appConstants.dart';
-import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/model/built_post.dart';
-import 'package:iit_app/ui/workshop_custom_widgets.dart';
 
 class Events extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Size screensize = MediaQuery.of(context).size;
     return SingleChildScrollView(
-        scrollDirection: Axis.horizontal, child: buildAllWorkshopsBody(context)
-        //  Row(
-        //   children: [
-        //     EventCard(
-        //       image: AssetImage('assets/iitbhu.jpeg'),
-        //       eventstatus: true,
-        //       press: () {},
-        //     ),
-        //     EventCard(
-        //       image: AssetImage('assets/iitbhu.jpeg'),
-        //       eventstatus: true,
-        //       press: () {},
-        //     ),
-        //     EventCard(
-        //       image: AssetImage('assets/iitbhu.jpeg'),
-        //       eventstatus: false,
-        //       press: () {},
-        //     ),
-        //     EventCard(
-        //       image: AssetImage('assets/iitbhu.jpeg'),
-        //       eventstatus: false,
-        //       press: () {},
-        //     ),
-        //     EventCard(
-        //       image: AssetImage('assets/iitbhu.jpeg'),
-        //       eventstatus: false,
-        //       press: () {},
-        //     ),
-        //   ],
-        // ),
-        // ),
-        );
+        scrollDirection: Axis.horizontal,
+        child: buildAllWorkshopsBody(context));
   }
 }
 
