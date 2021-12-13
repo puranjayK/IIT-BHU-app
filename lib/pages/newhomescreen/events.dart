@@ -136,76 +136,72 @@ Widget _buildAllWorkshopsBodyPosts(
     children: <Widget>[
       Container(
         height: screensize.height * 0.3,
-        child: Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: posts.active_workshops.length,
-            padding: EdgeInsets.only(top: 1.0, right: 10.0),
-            itemBuilder: (context, index) {
-              final w = posts.active_workshops[index];
-              final bool isClub = w.club != null;
-              var logoFile;
-              if (isClub)
-                logoFile = AppConstants.getImageFile(w.club.small_image_url);
-              else
-                logoFile = AppConstants.getImageFile(w.entity.small_image_url);
-              return EventCard(
-                image: isClub
-                    ? (w.club.small_image_url == null ||
-                            w.club.small_image_url == ''
-                        ? AssetImage('assets/iitbhu.jpeg')
-                        : logoFile == null
-                            ? NetworkImage(w.club.small_image_url)
-                            : FileImage(logoFile))
-                    : (w.entity.small_image_url == null ||
-                            w.entity.small_image_url == ''
-                        ? AssetImage('assets/iitbhu.jpeg')
-                        : logoFile == null
-                            ? NetworkImage(w.entity.small_image_url)
-                            : FileImage(logoFile)),
-                eventstatus: true,
-                press: null,
-              );
-            },
-          ),
+        child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: posts.active_workshops.length,
+          padding: EdgeInsets.only(top: 1.0, right: 10.0),
+          itemBuilder: (context, index) {
+            final w = posts.active_workshops[index];
+            final bool isClub = w.club != null;
+            var logoFile;
+            if (isClub)
+              logoFile = AppConstants.getImageFile(w.club.small_image_url);
+            else
+              logoFile = AppConstants.getImageFile(w.entity.small_image_url);
+            return EventCard(
+              image: isClub
+                  ? (w.club.small_image_url == null ||
+                          w.club.small_image_url == ''
+                      ? AssetImage('assets/iitbhu.jpeg')
+                      : logoFile == null
+                          ? NetworkImage(w.club.small_image_url)
+                          : FileImage(logoFile))
+                  : (w.entity.small_image_url == null ||
+                          w.entity.small_image_url == ''
+                      ? AssetImage('assets/iitbhu.jpeg')
+                      : logoFile == null
+                          ? NetworkImage(w.entity.small_image_url)
+                          : FileImage(logoFile)),
+              eventstatus: true,
+              press: null,
+            );
+          },
         ),
       ),
       Container(
         height: screensize.height * 0.3,
-        child: Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: posts.past_workshops.length,
-            padding: EdgeInsets.only(top: 1.0, right: 10.0),
-            itemBuilder: (context, index) {
-              final w = posts.past_workshops[index];
-              final bool isClub = w.club != null;
-              var logoFile;
-              if (isClub)
-                logoFile = AppConstants.getImageFile(w.club.small_image_url);
-              else
-                logoFile = AppConstants.getImageFile(w.entity.small_image_url);
-              return EventCard(
-                image: isClub
-                    ? (w.club.small_image_url == null ||
-                            w.club.small_image_url == ''
-                        ? AssetImage('assets/iitbhu.jpeg')
-                        : logoFile == null
-                            ? NetworkImage(w.club.small_image_url)
-                            : FileImage(logoFile))
-                    : (w.entity.small_image_url == null ||
-                            w.entity.small_image_url == ''
-                        ? AssetImage('assets/iitbhu.jpeg')
-                        : logoFile == null
-                            ? NetworkImage(w.entity.small_image_url)
-                            : FileImage(logoFile)),
-                eventstatus: false,
-                press: null,
-              );
-            },
-          ),
+        child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: posts.past_workshops.length,
+          padding: EdgeInsets.only(top: 1.0, right: 10.0),
+          itemBuilder: (context, index) {
+            final w = posts.past_workshops[index];
+            final bool isClub = w.club != null;
+            var logoFile;
+            if (isClub)
+              logoFile = AppConstants.getImageFile(w.club.small_image_url);
+            else
+              logoFile = AppConstants.getImageFile(w.entity.small_image_url);
+            return EventCard(
+              image: isClub
+                  ? (w.club.small_image_url == null ||
+                          w.club.small_image_url == ''
+                      ? AssetImage('assets/iitbhu.jpeg')
+                      : logoFile == null
+                          ? NetworkImage(w.club.small_image_url)
+                          : FileImage(logoFile))
+                  : (w.entity.small_image_url == null ||
+                          w.entity.small_image_url == ''
+                      ? AssetImage('assets/iitbhu.jpeg')
+                      : logoFile == null
+                          ? NetworkImage(w.entity.small_image_url)
+                          : FileImage(logoFile)),
+              eventstatus: false,
+              press: null,
+            );
+          },
         ),
       ),
     ],
