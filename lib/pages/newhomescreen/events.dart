@@ -137,11 +137,9 @@ Widget _buildAllWorkshopsBodyPosts(
   Size screensize = MediaQuery.of(context).size;
   return Row(
     children: <Widget>[
-      Container(
-        height: screensize.height * 0.3,
-        child: Expanded(
+
+      Expanded(
           child: ListView.builder(
-            // physics: ScrollPhysics(),
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             itemCount: posts.active_workshops.length,
@@ -186,12 +184,7 @@ Widget _buildAllWorkshopsBodyPosts(
               );
             },
           ),
-        ),
-      ),
-      Container(
-        height: screensize.height * 0.3,
-        child: Expanded(
-          child: ListView.builder(
+      ListView.builder(
             shrinkWrap: true,
             physics: ScrollPhysics(),
             scrollDirection: Axis.horizontal,
@@ -235,12 +228,11 @@ Widget _buildAllWorkshopsBodyPosts(
                               : FileImage(logoFile)),
                   eventstatus: false,
                   press: null,
-                ),
+              ),
               );
             },
           ),
-        ),
-      ),
+
     ],
   );
 }
