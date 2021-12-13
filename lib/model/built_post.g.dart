@@ -882,6 +882,12 @@ class _$BuiltWorkshopSummaryPostSerializer
         ..add(serializers.serialize(object.time,
             specifiedType: const FullType(String)));
     }
+    if (object.image_url != null) {
+      result
+        ..add('image_url')
+        ..add(serializers.serialize(object.image_url,
+            specifiedType: const FullType(String)));
+    }
     if (object.tags != null) {
       result
         ..add('tags')
@@ -930,6 +936,10 @@ class _$BuiltWorkshopSummaryPostSerializer
           break;
         case 'time':
           result.time = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'image_url':
+          result.image_url = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'tags':
@@ -3970,6 +3980,8 @@ class _$BuiltWorkshopSummaryPost extends BuiltWorkshopSummaryPost {
   @override
   final String time;
   @override
+  final String image_url;
+  @override
   final BuiltList<TagDetail> tags;
 
   factory _$BuiltWorkshopSummaryPost(
@@ -3984,6 +3996,7 @@ class _$BuiltWorkshopSummaryPost extends BuiltWorkshopSummaryPost {
       this.date,
       this.is_workshop,
       this.time,
+      this.image_url,
       this.tags})
       : super._() {
     if (title == null) {
@@ -4018,6 +4031,7 @@ class _$BuiltWorkshopSummaryPost extends BuiltWorkshopSummaryPost {
         date == other.date &&
         is_workshop == other.is_workshop &&
         time == other.time &&
+        image_url == other.image_url &&
         tags == other.tags;
   }
 
@@ -4028,12 +4042,14 @@ class _$BuiltWorkshopSummaryPost extends BuiltWorkshopSummaryPost {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, id.hashCode), club.hashCode),
-                            entity.hashCode),
-                        title.hashCode),
-                    date.hashCode),
-                is_workshop.hashCode),
-            time.hashCode),
+                        $jc(
+                            $jc($jc($jc(0, id.hashCode), club.hashCode),
+                                entity.hashCode),
+                            title.hashCode),
+                        date.hashCode),
+                    is_workshop.hashCode),
+                time.hashCode),
+            image_url.hashCode),
         tags.hashCode));
   }
 
@@ -4047,6 +4063,7 @@ class _$BuiltWorkshopSummaryPost extends BuiltWorkshopSummaryPost {
           ..add('date', date)
           ..add('is_workshop', is_workshop)
           ..add('time', time)
+          ..add('image_url', image_url)
           ..add('tags', tags))
         .toString();
   }
@@ -4086,6 +4103,10 @@ class BuiltWorkshopSummaryPostBuilder
   String get time => _$this._time;
   set time(String time) => _$this._time = time;
 
+  String _image_url;
+  String get image_url => _$this._image_url;
+  set image_url(String image_url) => _$this._image_url = image_url;
+
   ListBuilder<TagDetail> _tags;
   ListBuilder<TagDetail> get tags =>
       _$this._tags ??= new ListBuilder<TagDetail>();
@@ -4102,6 +4123,7 @@ class BuiltWorkshopSummaryPostBuilder
       _date = _$v.date;
       _is_workshop = _$v.is_workshop;
       _time = _$v.time;
+      _image_url = _$v.image_url;
       _tags = _$v.tags?.toBuilder();
       _$v = null;
     }
@@ -4134,6 +4156,7 @@ class BuiltWorkshopSummaryPostBuilder
               date: date,
               is_workshop: is_workshop,
               time: time,
+              image_url: image_url,
               tags: _tags?.build());
     } catch (_) {
       String _$failedField;

@@ -13,7 +13,7 @@ import 'package:iit_app/pages/complaints/complaints.dart';
 import 'package:iit_app/pages/Home/homePage.dart';
 import 'package:iit_app/pages/login/loginPage.dart';
 import 'package:iit_app/pages/about/aboutPage.dart';
-import 'package:iit_app/pages/newhomescreen/newhomescreen.dart';
+import 'package:iit_app/pages/newHomePage/newHomePage.dart';
 import 'package:iit_app/pages/settings/settingsPage.dart';
 
 void main() async {
@@ -40,7 +40,8 @@ void main() async {
       //! '/root' is root route and should always remain in navigator stack, period. (so that FCM notification will always have a stable context to act upon)
 
       '/root': (BuildContext context) => RootPage(),
-      '/newhome': (BuildContext context) => NewHomeScreen(),
+      // '/newhome': (BuildContext context) => NewHomeScreen(),
+      '/newhome': (BuildContext context) => NewHomePage(),
       '/home': (BuildContext context) => HomePage(),
       '/mapPage': (BuildContext context) => MapPage(),
       '/academicsPage': (BuildContext context) => AcademicsPage(),

@@ -216,6 +216,9 @@ abstract class BuiltWorkshopSummaryPost
   String get time;
 
   @nullable
+  String get image_url;
+
+  @nullable
   BuiltList<TagDetail> get tags;
 
   BuiltWorkshopSummaryPost._();
