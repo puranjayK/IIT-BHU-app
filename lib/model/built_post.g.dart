@@ -52,6 +52,8 @@ Serializer<BuiltContacts> _$builtContactsSerializer =
 Serializer<BuiltTags> _$builtTagsSerializer = new _$BuiltTagsSerializer();
 Serializer<LoginPost> _$loginPostSerializer = new _$LoginPostSerializer();
 Serializer<Token> _$tokenSerializer = new _$TokenSerializer();
+Serializer<BuiltAllNotices> _$builtAllNoticesSerializer =
+    new _$BuiltAllNoticesSerializer();
 
 class _$ConfigVarSerializer implements StructuredSerializer<ConfigVar> {
   @override
@@ -2643,6 +2645,113 @@ class _$TokenSerializer implements StructuredSerializer<Token> {
         case 'token':
           result.token = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$BuiltAllNoticesSerializer
+    implements StructuredSerializer<BuiltAllNotices> {
+  @override
+  final Iterable<Type> types = const [BuiltAllNotices, _$BuiltAllNotices];
+  @override
+  final String wireName = 'BuiltAllNotices';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, BuiltAllNotices object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'title',
+      serializers.serialize(object.title,
+          specifiedType: const FullType(String)),
+      'date',
+      serializers.serialize(object.date, specifiedType: const FullType(String)),
+    ];
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(int)));
+    }
+    if (object.notice_contract != null) {
+      result
+        ..add('notice_contract')
+        ..add(serializers.serialize(object.notice_contract,
+            specifiedType: const FullType(String)));
+    }
+    if (object.description != null) {
+      result
+        ..add('description')
+        ..add(serializers.serialize(object.description,
+            specifiedType: const FullType(String)));
+    }
+    if (object.notice_url != null) {
+      result
+        ..add('notice_url')
+        ..add(serializers.serialize(object.notice_url,
+            specifiedType: const FullType(String)));
+    }
+    if (object.upvote != null) {
+      result
+        ..add('upvote')
+        ..add(serializers.serialize(object.upvote,
+            specifiedType: const FullType(int)));
+    }
+    if (object.downvote != null) {
+      result
+        ..add('downvote')
+        ..add(serializers.serialize(object.downvote,
+            specifiedType: const FullType(int)));
+    }
+    return result;
+  }
+
+  @override
+  BuiltAllNotices deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new BuiltAllNoticesBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'notice_contract':
+          result.notice_contract = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'title':
+          result.title = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'description':
+          result.description = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'date':
+          result.date = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'notice_url':
+          result.notice_url = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'upvote':
+          result.upvote = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'downvote':
+          result.downvote = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -6888,6 +6997,182 @@ class TokenBuilder implements Builder<Token, TokenBuilder> {
   @override
   _$Token build() {
     final _$result = _$v ?? new _$Token._(token: token);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$BuiltAllNotices extends BuiltAllNotices {
+  @override
+  final int id;
+  @override
+  final String notice_contract;
+  @override
+  final String title;
+  @override
+  final String description;
+  @override
+  final String date;
+  @override
+  final String notice_url;
+  @override
+  final int upvote;
+  @override
+  final int downvote;
+
+  factory _$BuiltAllNotices([void Function(BuiltAllNoticesBuilder) updates]) =>
+      (new BuiltAllNoticesBuilder()..update(updates)).build();
+
+  _$BuiltAllNotices._(
+      {this.id,
+      this.notice_contract,
+      this.title,
+      this.description,
+      this.date,
+      this.notice_url,
+      this.upvote,
+      this.downvote})
+      : super._() {
+    if (title == null) {
+      throw new BuiltValueNullFieldError('BuiltAllNotices', 'title');
+    }
+    if (date == null) {
+      throw new BuiltValueNullFieldError('BuiltAllNotices', 'date');
+    }
+  }
+
+  @override
+  BuiltAllNotices rebuild(void Function(BuiltAllNoticesBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  BuiltAllNoticesBuilder toBuilder() =>
+      new BuiltAllNoticesBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is BuiltAllNotices &&
+        id == other.id &&
+        notice_contract == other.notice_contract &&
+        title == other.title &&
+        description == other.description &&
+        date == other.date &&
+        notice_url == other.notice_url &&
+        upvote == other.upvote &&
+        downvote == other.downvote;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc(
+            $jc(
+                $jc(
+                    $jc(
+                        $jc($jc($jc(0, id.hashCode), notice_contract.hashCode),
+                            title.hashCode),
+                        description.hashCode),
+                    date.hashCode),
+                notice_url.hashCode),
+            upvote.hashCode),
+        downvote.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('BuiltAllNotices')
+          ..add('id', id)
+          ..add('notice_contract', notice_contract)
+          ..add('title', title)
+          ..add('description', description)
+          ..add('date', date)
+          ..add('notice_url', notice_url)
+          ..add('upvote', upvote)
+          ..add('downvote', downvote))
+        .toString();
+  }
+}
+
+class BuiltAllNoticesBuilder
+    implements Builder<BuiltAllNotices, BuiltAllNoticesBuilder> {
+  _$BuiltAllNotices _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
+  String _notice_contract;
+  String get notice_contract => _$this._notice_contract;
+  set notice_contract(String notice_contract) =>
+      _$this._notice_contract = notice_contract;
+
+  String _title;
+  String get title => _$this._title;
+  set title(String title) => _$this._title = title;
+
+  String _description;
+  String get description => _$this._description;
+  set description(String description) => _$this._description = description;
+
+  String _date;
+  String get date => _$this._date;
+  set date(String date) => _$this._date = date;
+
+  String _notice_url;
+  String get notice_url => _$this._notice_url;
+  set notice_url(String notice_url) => _$this._notice_url = notice_url;
+
+  int _upvote;
+  int get upvote => _$this._upvote;
+  set upvote(int upvote) => _$this._upvote = upvote;
+
+  int _downvote;
+  int get downvote => _$this._downvote;
+  set downvote(int downvote) => _$this._downvote = downvote;
+
+  BuiltAllNoticesBuilder();
+
+  BuiltAllNoticesBuilder get _$this {
+    if (_$v != null) {
+      _id = _$v.id;
+      _notice_contract = _$v.notice_contract;
+      _title = _$v.title;
+      _description = _$v.description;
+      _date = _$v.date;
+      _notice_url = _$v.notice_url;
+      _upvote = _$v.upvote;
+      _downvote = _$v.downvote;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(BuiltAllNotices other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$BuiltAllNotices;
+  }
+
+  @override
+  void update(void Function(BuiltAllNoticesBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$BuiltAllNotices build() {
+    final _$result = _$v ??
+        new _$BuiltAllNotices._(
+            id: id,
+            notice_contract: notice_contract,
+            title: title,
+            description: description,
+            date: date,
+            notice_url: notice_url,
+            upvote: upvote,
+            downvote: downvote);
     replace(_$result);
     return _$result;
   }

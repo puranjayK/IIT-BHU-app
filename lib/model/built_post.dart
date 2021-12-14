@@ -657,3 +657,24 @@ abstract class Token implements Built<Token, TokenBuilder> {
   factory Token([updates(TokenBuilder b)]) = _$Token;
   static Serializer<Token> get serializer => _$tokenSerializer;
 }
+abstract class BuiltAllNotices implements Built<BuiltAllNotices,BuiltAllNoticesBuilder>{
+  @nullable
+  int get id;
+  @nullable
+  String get notice_contract;
+  String get title;
+  @nullable
+  String get description;
+  String get date;
+  @nullable
+  String get notice_url;
+  @nullable
+  int get upvote;
+  @nullable
+  int get downvote;
+
+  BuiltAllNotices._();
+  factory BuiltAllNotices([updates(BuiltAllNoticesBuilder b)]) = _$BuiltAllNotices;
+  static Serializer<BuiltAllNotices> get serializer => _$builtAllNoticesSerializer;
+}
+
