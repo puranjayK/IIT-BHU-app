@@ -228,7 +228,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () async {
                 await LoginPage.guestLoginSetup();
                 Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/home', ModalRoute.withName('/root'));
+                    '/newhome', ModalRoute.withName('/root'));
               },
               label: Text(
                 'Guest',
@@ -285,7 +285,7 @@ class _LoginPageState extends State<LoginPage> {
         });
 
         Navigator.of(context)
-            .pushNamedAndRemoveUntil('/home', ModalRoute.withName('/root'));
+            .pushNamedAndRemoveUntil('/newhome', ModalRoute.withName('/root'));
       }
     }
 
