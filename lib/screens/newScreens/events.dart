@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:iit_app/data/internet_connection_interceptor.dart';
 import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/model/built_post.dart';
-import 'package:iit_app/pages/worshop_detail/workshopDetailPage.dart';
 
 class Events extends StatelessWidget {
   @override
@@ -18,12 +17,12 @@ class EventCard extends StatelessWidget {
   const EventCard({
     this.image,
     this.eventstatus,
+    this.press,
   });
-
-  Function onEventTap() {}
 
   final ImageProvider<Object> image;
   final bool eventstatus;
+  final Function press;
   @override
   Widget build(BuildContext context) {
     Size screensize = MediaQuery.of(context).size;
@@ -132,34 +131,25 @@ FutureBuilder<Response> buildAllWorkshopsBody(BuildContext context,
 Widget _buildAllWorkshopsBodyPosts(
     BuildContext context, BuiltAllWorkshopsPost posts,
     {Function reload}) {
+  Size screensize = MediaQuery.of(context).size;
   return Row(
     children: <Widget>[
-      ListView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        itemCount: posts.active_workshops.length,
-        padding: EdgeInsets.only(top: 1.0, right: 10.0),
-        itemBuilder: (context, index) {
-          final w = posts.active_workshops[index];
-          final bool isClub = w.club != null;
-          var logoFile;
-          if (isClub)
-            logoFile = AppConstants.getImageFile(w.club.small_image_url);
-          else
-            logoFile = AppConstants.getImageFile(w.entity.small_image_url);
-          return GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                  pageBuilder: (_, __, ___) =>
-                      WorkshopDetailPage(w.id, workshop: w, isPast: false),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) =>
-                          FadeTransition(opacity: animation, child: child),
-                ),
-              );
-            },
-            child: EventCard(
+      Container(
+        height: screensize.height * 0.3,
+        child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: posts.active_workshops.length,
+          padding: EdgeInsets.only(top: 1.0, right: 10.0),
+          itemBuilder: (context, index) {
+            final w = posts.active_workshops[index];
+            final bool isClub = w.club != null;
+            var logoFile;
+            if (isClub)
+              logoFile = AppConstants.getImageFile(w.club.small_image_url);
+            else
+              logoFile = AppConstants.getImageFile(w.entity.small_image_url);
+            return EventCard(
               image: isClub
                   ? (w.club.small_image_url == null ||
                           w.club.small_image_url == ''
@@ -174,39 +164,27 @@ Widget _buildAllWorkshopsBodyPosts(
                           ? NetworkImage(w.entity.small_image_url)
                           : FileImage(logoFile)),
               eventstatus: true,
-            ),
-          );
-        },
+              press: null,
+            );
+          },
+        ),
       ),
-      ListView.builder(
-        shrinkWrap: true,
-        physics: ScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        itemCount: posts.past_workshops.length,
-        padding: EdgeInsets.only(top: 1.0, right: 10.0),
-        itemBuilder: (context, index) {
-          final w = posts.past_workshops[index];
-          final bool isClub = w.club != null;
-
-          var logoFile;
-          if (isClub)
-            logoFile = AppConstants.getImageFile(w.club.small_image_url);
-          else
-            logoFile = AppConstants.getImageFile(w.entity.small_image_url);
-          return GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                  pageBuilder: (_, __, ___) =>
-                      WorkshopDetailPage(w.id, workshop: w, isPast: true),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) =>
-                          FadeTransition(opacity: animation, child: child),
-                ),
-              );
-              // .then((value) => reload());
-            },
-            child: EventCard(
+      Container(
+        height: screensize.height * 0.3,
+        child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: posts.past_workshops.length,
+          padding: EdgeInsets.only(top: 1.0, right: 10.0),
+          itemBuilder: (context, index) {
+            final w = posts.past_workshops[index];
+            final bool isClub = w.club != null;
+            var logoFile;
+            if (isClub)
+              logoFile = AppConstants.getImageFile(w.club.small_image_url);
+            else
+              logoFile = AppConstants.getImageFile(w.entity.small_image_url);
+            return EventCard(
               image: isClub
                   ? (w.club.small_image_url == null ||
                           w.club.small_image_url == ''
@@ -221,9 +199,10 @@ Widget _buildAllWorkshopsBodyPosts(
                           ? NetworkImage(w.entity.small_image_url)
                           : FileImage(logoFile)),
               eventstatus: false,
-            ),
-          );
-        },
+              press: null,
+            );
+          },
+        ),
       ),
     ],
   );
