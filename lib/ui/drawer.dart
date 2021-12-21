@@ -178,6 +178,7 @@ class SideBar extends Drawer {
               },
             ),
             getNavItem(Icons.info, "About", '/about'),
+            getNavItem(Icons.call, "Emergency", '/emergency')
           ],
         ),
       ),
