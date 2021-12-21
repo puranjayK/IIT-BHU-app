@@ -439,4 +439,21 @@ class _$PostApiService extends PostApiService {
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<BuiltList<ConfigVar>, ConfigVar>($request);
   }
+
+  Future<Response<GrievanceCount>> getGrievanceCount(String token) {
+    final $url = '/grievance/count/';
+    final $headers = {'Authorization': token};
+    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
+    return client.send<GrievanceCount, GrievanceCount>($request);
+  }
+
+  Future<Response<Grievance>> createGrievance(
+      String token, GrievancePost body) {
+    final $url = '/grievance/create/';
+    final $headers = {'Authorization': token};
+    final $body = body;
+    final $request =
+        Request('POST', $url, client.baseUrl, body: $body, headers: $headers);
+    return client.send<Grievance, Grievance>($request);
+  }
 }

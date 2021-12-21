@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/pages/academics/branch.dart';
+import 'package:iit_app/ui/snackbar.dart';
 
 // ignore: must_be_immutable
 class BranchPage extends StatefulWidget {
@@ -35,33 +36,53 @@ class _BranchPageState extends State<BranchPage> {
           children: [
             Row(),
             InkWell(
-                onTap: (){
-                  showSnackBar(context,'This feature is currently under development',primaryColor,secondaryColor);
+                onTap: () {
+                  showSnackBar(
+                      context,
+                      'This feature is currently under development',
+                      primaryColor,
+                      secondaryColor);
                 },
                 splashColor: primaryColor,
                 borderRadius: BorderRadius.circular(15),
-                child: academicInfo('Study Materials', 'assets/academics/studyMaterials.png')),
-            SizedBox(height: 40,),
+                child: academicInfo(
+                    'Study Materials', 'assets/academics/studyMaterials.png')),
+            SizedBox(
+              height: 40,
+            ),
             InkWell(
-                onTap: (){
-                  showSnackBar(context,'This feature is currently under development',primaryColor,secondaryColor);
+                onTap: () {
+                  showSnackBar(
+                      context,
+                      'This feature is currently under development',
+                      primaryColor,
+                      secondaryColor);
                 },
                 splashColor: primaryColor,
                 borderRadius: BorderRadius.circular(15),
-                child: academicInfo('Academic Schedule', 'assets/academics/academicShedule.png')),
-            SizedBox(height: 40,),
+                child: academicInfo('Academic Schedule',
+                    'assets/academics/academicShedule.png')),
+            SizedBox(
+              height: 40,
+            ),
             InkWell(
-                onTap: (){
-                  showSnackBar(context,'This feature is currently under development',primaryColor,secondaryColor);
+                onTap: () {
+                  showSnackBar(
+                      context,
+                      'This feature is currently under development',
+                      primaryColor,
+                      secondaryColor);
                 },
                 splashColor: primaryColor,
                 borderRadius: BorderRadius.circular(15),
-                child: academicInfo('Profs and H.O.D.s', 'assets/academics/profs.png')),
+                child: academicInfo(
+                    'Profs and H.O.D.s', 'assets/academics/profs.png')),
           ],
         ),
       ),
     );
   }
+
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: primaryColor,
@@ -85,7 +106,9 @@ class _BranchPageState extends State<BranchPage> {
               fontSize: 23,
             ),
           ),
-          SizedBox(width: 25,),
+          SizedBox(
+            width: 25,
+          ),
           Container(
             padding: EdgeInsets.all(8),
             height: 35.0,
@@ -93,11 +116,10 @@ class _BranchPageState extends State<BranchPage> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: (AppConstants.currentUser == null ||
-                    AppConstants.isGuest == true ||
-                    AppConstants.currentUser.photo_url == '')
+                        AppConstants.isGuest == true ||
+                        AppConstants.currentUser.photo_url == '')
                     ? AssetImage('assets/guest.png')
-                    : NetworkImage(
-                    AppConstants.currentUser.photo_url),
+                    : NetworkImage(AppConstants.currentUser.photo_url),
                 fit: BoxFit.fill,
               ),
               borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -108,29 +130,7 @@ class _BranchPageState extends State<BranchPage> {
       ),
     );
   }
-  void showSnackBar(BuildContext context,String text,Color textColor,Color bgColor) {
-    final snackBar = new SnackBar(
-      duration: Duration(seconds: 2),
-      margin: EdgeInsets.symmetric(vertical: 20,horizontal: 15),
-      content: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(text,style: TextStyle(
-              color: textColor,
-            fontWeight: FontWeight.w400
-          ),),
-        ],
-      ),
-      backgroundColor: bgColor,
-      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 0),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(20))
-      ),
-    );
-    //Scaffold.of(context).showSnackBar(snackBar);
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
+
   // PreferredSize customAppBar(BuildContext context) {
   //   return PreferredSize(
   //     preferredSize: MediaQuery.of(context).size*0.3,
@@ -191,7 +191,7 @@ class _BranchPageState extends State<BranchPage> {
   //     ),
   //   );
   // }
-  Container academicInfo(String reqInfo,String img) {
+  Container academicInfo(String reqInfo, String img) {
     return Container(
       color: bgColor,
       child: Column(
@@ -207,7 +207,10 @@ class _BranchPageState extends State<BranchPage> {
               decoration: BoxDecoration(
                   color: containerColor,
                   borderRadius: BorderRadius.circular(15)),
-              child: Image.asset(img,scale: 0.5,),
+              child: Image.asset(
+                img,
+                scale: 0.5,
+              ),
             ),
           ),
           SizedBox(
@@ -216,9 +219,7 @@ class _BranchPageState extends State<BranchPage> {
           Text(
             reqInfo,
             style: GoogleFonts.lato(
-                color: primaryColor,
-                fontSize: 15,
-                fontWeight: FontWeight.bold),
+                color: primaryColor, fontSize: 15, fontWeight: FontWeight.bold),
           ),
         ],
       ),

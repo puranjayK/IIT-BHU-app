@@ -5,6 +5,7 @@ import 'package:iit_app/pages/Init_Root/initiation.dart';
 import 'package:iit_app/pages/Init_Root/root.dart';
 import 'package:iit_app/pages/academics/academicsPage.dart';
 import 'package:iit_app/pages/allEntities/allEntitiesPage.dart';
+import 'package:iit_app/pages/grievance/grievance.dart';
 import 'package:iit_app/pages/map/mapPage.dart';
 import 'package:iit_app/pages/mess/mess.dart';
 import 'package:iit_app/pages/account/accountPage.dart';
@@ -42,7 +43,7 @@ void main() async {
 
       '/home': (BuildContext context) => HomePage(),
       '/mapPage': (BuildContext context) => MapPage(),
-      '/academicsPage':(BuildContext context) =>AcademicsPage(),
+      '/academicsPage': (BuildContext context) => AcademicsPage(),
       '/mess': (BuildContext context) => MessScreen(),
       '/allWorkshops': (BuildContext context) => AllWorkshopsScreen(),
       '/allEntities': (BuildContext context) => EntitiesPage(),
@@ -51,6 +52,7 @@ void main() async {
       '/complaints': (BuildContext context) => ComplaintsScreen(),
       '/login': (BuildContext context) => LoginPage(),
       '/about': (BuildContext context) => AboutPage(),
+      '/grievance': (BuildContext context) => GrievancePage(),
     },
   ));
 }

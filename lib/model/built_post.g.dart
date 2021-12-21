@@ -52,6 +52,11 @@ Serializer<BuiltContacts> _$builtContactsSerializer =
 Serializer<BuiltTags> _$builtTagsSerializer = new _$BuiltTagsSerializer();
 Serializer<LoginPost> _$loginPostSerializer = new _$LoginPostSerializer();
 Serializer<Token> _$tokenSerializer = new _$TokenSerializer();
+Serializer<GrievanceCount> _$grievanceCountSerializer =
+    new _$GrievanceCountSerializer();
+Serializer<GrievancePost> _$grievancePostSerializer =
+    new _$GrievancePostSerializer();
+Serializer<Grievance> _$grievanceSerializer = new _$GrievanceSerializer();
 
 class _$ConfigVarSerializer implements StructuredSerializer<ConfigVar> {
   @override
@@ -2633,6 +2638,246 @@ class _$TokenSerializer implements StructuredSerializer<Token> {
         case 'token':
           result.token = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GrievanceCountSerializer
+    implements StructuredSerializer<GrievanceCount> {
+  @override
+  final Iterable<Type> types = const [GrievanceCount, _$GrievanceCount];
+  @override
+  final String wireName = 'GrievanceCount';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, GrievanceCount object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[];
+    if (object.pending != null) {
+      result
+        ..add('pending')
+        ..add(serializers.serialize(object.pending,
+            specifiedType: const FullType(int)));
+    }
+    if (object.registered != null) {
+      result
+        ..add('registered')
+        ..add(serializers.serialize(object.registered,
+            specifiedType: const FullType(int)));
+    }
+    if (object.closed != null) {
+      result
+        ..add('closed')
+        ..add(serializers.serialize(object.closed,
+            specifiedType: const FullType(int)));
+    }
+    return result;
+  }
+
+  @override
+  GrievanceCount deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GrievanceCountBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'pending':
+          result.pending = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'registered':
+          result.registered = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'closed':
+          result.closed = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GrievancePostSerializer implements StructuredSerializer<GrievancePost> {
+  @override
+  final Iterable<Type> types = const [GrievancePost, _$GrievancePost];
+  @override
+  final String wireName = 'GrievancePost';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, GrievancePost object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'branch',
+      serializers.serialize(object.branch,
+          specifiedType: const FullType(String)),
+      'course',
+      serializers.serialize(object.course,
+          specifiedType: const FullType(String)),
+      'year',
+      serializers.serialize(object.year, specifiedType: const FullType(String)),
+      'type_of_complaint',
+      serializers.serialize(object.type_of_complaint,
+          specifiedType: const FullType(String)),
+      'description',
+      serializers.serialize(object.description,
+          specifiedType: const FullType(String)),
+    ];
+    if (object.drive_link != null) {
+      result
+        ..add('drive_link')
+        ..add(serializers.serialize(object.drive_link,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  GrievancePost deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GrievancePostBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'branch':
+          result.branch = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'course':
+          result.course = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'year':
+          result.year = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'type_of_complaint':
+          result.type_of_complaint = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'description':
+          result.description = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'drive_link':
+          result.drive_link = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GrievanceSerializer implements StructuredSerializer<Grievance> {
+  @override
+  final Iterable<Type> types = const [Grievance, _$Grievance];
+  @override
+  final String wireName = 'Grievance';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, Grievance object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'branch',
+      serializers.serialize(object.branch,
+          specifiedType: const FullType(String)),
+      'course',
+      serializers.serialize(object.course,
+          specifiedType: const FullType(String)),
+      'year',
+      serializers.serialize(object.year, specifiedType: const FullType(String)),
+      'type_of_complaint',
+      serializers.serialize(object.type_of_complaint,
+          specifiedType: const FullType(String)),
+      'description',
+      serializers.serialize(object.description,
+          specifiedType: const FullType(String)),
+      'status',
+      serializers.serialize(object.status, specifiedType: const FullType(int)),
+    ];
+    if (object.drive_link != null) {
+      result
+        ..add('drive_link')
+        ..add(serializers.serialize(object.drive_link,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  Grievance deserialize(Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GrievanceBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'branch':
+          result.branch = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'course':
+          result.course = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'year':
+          result.year = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'type_of_complaint':
+          result.type_of_complaint = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'description':
+          result.description = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'drive_link':
+          result.drive_link = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'status':
+          result.status = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -6865,6 +7110,482 @@ class TokenBuilder implements Builder<Token, TokenBuilder> {
   @override
   _$Token build() {
     final _$result = _$v ?? new _$Token._(token: token);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GrievanceCount extends GrievanceCount {
+  @override
+  final int pending;
+  @override
+  final int registered;
+  @override
+  final int closed;
+
+  factory _$GrievanceCount([void Function(GrievanceCountBuilder) updates]) =>
+      (new GrievanceCountBuilder()..update(updates)).build();
+
+  _$GrievanceCount._({this.pending, this.registered, this.closed}) : super._();
+
+  @override
+  GrievanceCount rebuild(void Function(GrievanceCountBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GrievanceCountBuilder toBuilder() =>
+      new GrievanceCountBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GrievanceCount &&
+        pending == other.pending &&
+        registered == other.registered &&
+        closed == other.closed;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc($jc(0, pending.hashCode), registered.hashCode), closed.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('GrievanceCount')
+          ..add('pending', pending)
+          ..add('registered', registered)
+          ..add('closed', closed))
+        .toString();
+  }
+}
+
+class GrievanceCountBuilder
+    implements Builder<GrievanceCount, GrievanceCountBuilder> {
+  _$GrievanceCount _$v;
+
+  int _pending;
+  int get pending => _$this._pending;
+  set pending(int pending) => _$this._pending = pending;
+
+  int _registered;
+  int get registered => _$this._registered;
+  set registered(int registered) => _$this._registered = registered;
+
+  int _closed;
+  int get closed => _$this._closed;
+  set closed(int closed) => _$this._closed = closed;
+
+  GrievanceCountBuilder();
+
+  GrievanceCountBuilder get _$this {
+    if (_$v != null) {
+      _pending = _$v.pending;
+      _registered = _$v.registered;
+      _closed = _$v.closed;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GrievanceCount other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$GrievanceCount;
+  }
+
+  @override
+  void update(void Function(GrievanceCountBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$GrievanceCount build() {
+    final _$result = _$v ??
+        new _$GrievanceCount._(
+            pending: pending, registered: registered, closed: closed);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GrievancePost extends GrievancePost {
+  @override
+  final String name;
+  @override
+  final String branch;
+  @override
+  final String course;
+  @override
+  final String year;
+  @override
+  final String type_of_complaint;
+  @override
+  final String description;
+  @override
+  final String drive_link;
+
+  factory _$GrievancePost([void Function(GrievancePostBuilder) updates]) =>
+      (new GrievancePostBuilder()..update(updates)).build();
+
+  _$GrievancePost._(
+      {this.name,
+      this.branch,
+      this.course,
+      this.year,
+      this.type_of_complaint,
+      this.description,
+      this.drive_link})
+      : super._() {
+    if (name == null) {
+      throw new BuiltValueNullFieldError('GrievancePost', 'name');
+    }
+    if (branch == null) {
+      throw new BuiltValueNullFieldError('GrievancePost', 'branch');
+    }
+    if (course == null) {
+      throw new BuiltValueNullFieldError('GrievancePost', 'course');
+    }
+    if (year == null) {
+      throw new BuiltValueNullFieldError('GrievancePost', 'year');
+    }
+    if (type_of_complaint == null) {
+      throw new BuiltValueNullFieldError('GrievancePost', 'type_of_complaint');
+    }
+    if (description == null) {
+      throw new BuiltValueNullFieldError('GrievancePost', 'description');
+    }
+  }
+
+  @override
+  GrievancePost rebuild(void Function(GrievancePostBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GrievancePostBuilder toBuilder() => new GrievancePostBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GrievancePost &&
+        name == other.name &&
+        branch == other.branch &&
+        course == other.course &&
+        year == other.year &&
+        type_of_complaint == other.type_of_complaint &&
+        description == other.description &&
+        drive_link == other.drive_link;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc(
+            $jc(
+                $jc(
+                    $jc($jc($jc(0, name.hashCode), branch.hashCode),
+                        course.hashCode),
+                    year.hashCode),
+                type_of_complaint.hashCode),
+            description.hashCode),
+        drive_link.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('GrievancePost')
+          ..add('name', name)
+          ..add('branch', branch)
+          ..add('course', course)
+          ..add('year', year)
+          ..add('type_of_complaint', type_of_complaint)
+          ..add('description', description)
+          ..add('drive_link', drive_link))
+        .toString();
+  }
+}
+
+class GrievancePostBuilder
+    implements Builder<GrievancePost, GrievancePostBuilder> {
+  _$GrievancePost _$v;
+
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
+
+  String _branch;
+  String get branch => _$this._branch;
+  set branch(String branch) => _$this._branch = branch;
+
+  String _course;
+  String get course => _$this._course;
+  set course(String course) => _$this._course = course;
+
+  String _year;
+  String get year => _$this._year;
+  set year(String year) => _$this._year = year;
+
+  String _type_of_complaint;
+  String get type_of_complaint => _$this._type_of_complaint;
+  set type_of_complaint(String type_of_complaint) =>
+      _$this._type_of_complaint = type_of_complaint;
+
+  String _description;
+  String get description => _$this._description;
+  set description(String description) => _$this._description = description;
+
+  String _drive_link;
+  String get drive_link => _$this._drive_link;
+  set drive_link(String drive_link) => _$this._drive_link = drive_link;
+
+  GrievancePostBuilder();
+
+  GrievancePostBuilder get _$this {
+    if (_$v != null) {
+      _name = _$v.name;
+      _branch = _$v.branch;
+      _course = _$v.course;
+      _year = _$v.year;
+      _type_of_complaint = _$v.type_of_complaint;
+      _description = _$v.description;
+      _drive_link = _$v.drive_link;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GrievancePost other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$GrievancePost;
+  }
+
+  @override
+  void update(void Function(GrievancePostBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$GrievancePost build() {
+    final _$result = _$v ??
+        new _$GrievancePost._(
+            name: name,
+            branch: branch,
+            course: course,
+            year: year,
+            type_of_complaint: type_of_complaint,
+            description: description,
+            drive_link: drive_link);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$Grievance extends Grievance {
+  @override
+  final int id;
+  @override
+  final String name;
+  @override
+  final String branch;
+  @override
+  final String course;
+  @override
+  final String year;
+  @override
+  final String type_of_complaint;
+  @override
+  final String description;
+  @override
+  final String drive_link;
+  @override
+  final int status;
+
+  factory _$Grievance([void Function(GrievanceBuilder) updates]) =>
+      (new GrievanceBuilder()..update(updates)).build();
+
+  _$Grievance._(
+      {this.id,
+      this.name,
+      this.branch,
+      this.course,
+      this.year,
+      this.type_of_complaint,
+      this.description,
+      this.drive_link,
+      this.status})
+      : super._() {
+    if (id == null) {
+      throw new BuiltValueNullFieldError('Grievance', 'id');
+    }
+    if (name == null) {
+      throw new BuiltValueNullFieldError('Grievance', 'name');
+    }
+    if (branch == null) {
+      throw new BuiltValueNullFieldError('Grievance', 'branch');
+    }
+    if (course == null) {
+      throw new BuiltValueNullFieldError('Grievance', 'course');
+    }
+    if (year == null) {
+      throw new BuiltValueNullFieldError('Grievance', 'year');
+    }
+    if (type_of_complaint == null) {
+      throw new BuiltValueNullFieldError('Grievance', 'type_of_complaint');
+    }
+    if (description == null) {
+      throw new BuiltValueNullFieldError('Grievance', 'description');
+    }
+    if (status == null) {
+      throw new BuiltValueNullFieldError('Grievance', 'status');
+    }
+  }
+
+  @override
+  Grievance rebuild(void Function(GrievanceBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GrievanceBuilder toBuilder() => new GrievanceBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is Grievance &&
+        id == other.id &&
+        name == other.name &&
+        branch == other.branch &&
+        course == other.course &&
+        year == other.year &&
+        type_of_complaint == other.type_of_complaint &&
+        description == other.description &&
+        drive_link == other.drive_link &&
+        status == other.status;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc(
+            $jc(
+                $jc(
+                    $jc(
+                        $jc(
+                            $jc($jc($jc(0, id.hashCode), name.hashCode),
+                                branch.hashCode),
+                            course.hashCode),
+                        year.hashCode),
+                    type_of_complaint.hashCode),
+                description.hashCode),
+            drive_link.hashCode),
+        status.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('Grievance')
+          ..add('id', id)
+          ..add('name', name)
+          ..add('branch', branch)
+          ..add('course', course)
+          ..add('year', year)
+          ..add('type_of_complaint', type_of_complaint)
+          ..add('description', description)
+          ..add('drive_link', drive_link)
+          ..add('status', status))
+        .toString();
+  }
+}
+
+class GrievanceBuilder implements Builder<Grievance, GrievanceBuilder> {
+  _$Grievance _$v;
+
+  int _id;
+  int get id => _$this._id;
+  set id(int id) => _$this._id = id;
+
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
+
+  String _branch;
+  String get branch => _$this._branch;
+  set branch(String branch) => _$this._branch = branch;
+
+  String _course;
+  String get course => _$this._course;
+  set course(String course) => _$this._course = course;
+
+  String _year;
+  String get year => _$this._year;
+  set year(String year) => _$this._year = year;
+
+  String _type_of_complaint;
+  String get type_of_complaint => _$this._type_of_complaint;
+  set type_of_complaint(String type_of_complaint) =>
+      _$this._type_of_complaint = type_of_complaint;
+
+  String _description;
+  String get description => _$this._description;
+  set description(String description) => _$this._description = description;
+
+  String _drive_link;
+  String get drive_link => _$this._drive_link;
+  set drive_link(String drive_link) => _$this._drive_link = drive_link;
+
+  int _status;
+  int get status => _$this._status;
+  set status(int status) => _$this._status = status;
+
+  GrievanceBuilder();
+
+  GrievanceBuilder get _$this {
+    if (_$v != null) {
+      _id = _$v.id;
+      _name = _$v.name;
+      _branch = _$v.branch;
+      _course = _$v.course;
+      _year = _$v.year;
+      _type_of_complaint = _$v.type_of_complaint;
+      _description = _$v.description;
+      _drive_link = _$v.drive_link;
+      _status = _$v.status;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(Grievance other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$Grievance;
+  }
+
+  @override
+  void update(void Function(GrievanceBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$Grievance build() {
+    final _$result = _$v ??
+        new _$Grievance._(
+            id: id,
+            name: name,
+            branch: branch,
+            course: course,
+            year: year,
+            type_of_complaint: type_of_complaint,
+            description: description,
+            drive_link: drive_link,
+            status: status);
     replace(_$result);
     return _$result;
   }

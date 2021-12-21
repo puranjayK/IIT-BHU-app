@@ -309,6 +309,30 @@ abstract class PostApiService extends ChopperService {
 
 //! ------------------------------------------ Other (Team,Login,ConfigVar) end point APIs --------------------------------------------------------------
 
+//? --------------------------------------------------------------------------------------------------------------------
+//? --------------------------------------------------------------------------------------------------------------------
+
+//! ------------------------------------------ Other (Team,Login,ConfigVar) end point APIs --------------------------------------------------------------
+
+//! ------------------------------------------ Grievance (Count) end point APIs --------------------------------------------------------------
+
+  //? ----------------------------------- Get -------------------------------
+
+  @Get(path: '/grievance/count/')
+  Future<Response<GrievanceCount>> getGrievanceCount(
+      @Header('Authorization') String token);
+
+  //? ----------------------------------- Post -------------------------------
+
+  @Post(path: '/grievance/create/')
+  Future<Response<Grievance>> createGrievance(
+      @Header('Authorization') String token, @Body() GrievancePost body);
+
+  // @Get(path: '/config/')
+  // Future<Response<BuiltList<ConfigVar>>> getConfigVars();
+
+//! ------------------------------------------ Grievance (Count) end point APIs --------------------------------------------------------------
+
   static PostApiService create() {
     final client = ChopperClient(
       baseUrl: 'https://workshops-app-backend.herokuapp.com',

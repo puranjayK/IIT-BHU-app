@@ -654,3 +654,52 @@ abstract class Token implements Built<Token, TokenBuilder> {
   factory Token([updates(TokenBuilder b)]) = _$Token;
   static Serializer<Token> get serializer => _$tokenSerializer;
 }
+
+// !--------------------------------------------------------------------------------------------------------------------
+abstract class GrievanceCount
+    implements Built<GrievanceCount, GrievanceCountBuilder> {
+  @nullable
+  int get pending;
+  @nullable
+  int get registered;
+  @nullable
+  int get closed;
+
+  GrievanceCount._();
+  factory GrievanceCount([updates(GrievanceCountBuilder b)]) = _$GrievanceCount;
+  static Serializer<GrievanceCount> get serializer =>
+      _$grievanceCountSerializer;
+}
+
+abstract class GrievancePost
+    implements Built<GrievancePost, GrievancePostBuilder> {
+  String get name;
+  String get branch;
+  String get course;
+  String get year;
+  String get type_of_complaint;
+  String get description;
+  @nullable
+  String get drive_link;
+
+  GrievancePost._();
+  factory GrievancePost([updates(GrievancePostBuilder b)]) = _$GrievancePost;
+  static Serializer<GrievancePost> get serializer => _$grievancePostSerializer;
+}
+
+abstract class Grievance implements Built<Grievance, GrievanceBuilder> {
+  int get id;
+  String get name;
+  String get branch;
+  String get course;
+  String get year;
+  String get type_of_complaint;
+  String get description;
+  @nullable
+  String get drive_link;
+  int get status;
+
+  Grievance._();
+  factory Grievance([updates(GrievanceBuilder b)]) = _$Grievance;
+  static Serializer<Grievance> get serializer => _$grievanceSerializer;
+}

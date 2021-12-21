@@ -14,6 +14,9 @@ class ColorConstants {
   static Color headingColor;
   static Color porHolderBackground;
   static Color textColor;
+  static Color grievanceBtn;
+  static Color grievanceLabelText;
+  static Color grievanceBack;
 
   static setLight() {
     ColorConstants.homeBackground = Colors.blue[200];
@@ -26,6 +29,9 @@ class ColorConstants {
     ColorConstants.headingColor = Color(0xFF736AB7);
     ColorConstants.porHolderBackground = Colors.grey[300];
     ColorConstants.textColor = Colors.black;
+    ColorConstants.grievanceBtn = Color(0xff176EDE);
+    ColorConstants.grievanceBack = Color(0xffB9D8FF);
+    ColorConstants.grievanceLabelText = Color(0xffD7F2FF);
   }
 
   static setDark() {
@@ -39,5 +45,9 @@ class ColorConstants {
     ColorConstants.headingColor = Color(0xFF5dbcd2);
     ColorConstants.porHolderBackground = Color(0xff5dbcd2);
     ColorConstants.textColor = Colors.white;
+    // to be changed after dark theme design are done
+    ColorConstants.grievanceBtn = Color(0xff176EDE);
+    ColorConstants.grievanceBack = Color(0xffB9D8FF);
+    ColorConstants.grievanceLabelText = Color(0xffD7F2FF);
   }
 }
