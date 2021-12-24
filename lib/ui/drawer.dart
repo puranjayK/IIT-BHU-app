@@ -133,6 +133,26 @@ class SideBar extends Drawer {
                     },
                   )
                 : getNavItem(Icons.account_box, "Account", '/account'),
+            AppConstants.isGuest
+                ? ListTile(
+                    title: Text("New Profile",
+                        style: Style.baseTextStyle
+                            .copyWith(color: ColorConstants.textColor)),
+                    leading: Icon(Icons.account_box,
+                        color: ColorConstants.textColor),
+                    // TODO: ask user to log in , may be in a dialog box
+
+                    onTap: () {
+                      Navigator.pop(context);
+                      return ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(
+                        elevation: 10,
+                        content: Text('You must be logged in'),
+                        duration: Duration(seconds: 2),
+                      ));
+                    },
+                  )
+                : getNavItem(Icons.account_box, "New Profile", '/newProfile'),
             // getNavItem(Icons.comment, "Complaints & Suggestions", '/complaints'),
             getNavItem(Icons.settings, "Settings", '/settings'),
             getNavItem(Icons.comment, "Grievances", '/grievance'),

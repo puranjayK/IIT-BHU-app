@@ -1,16 +1,17 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:iit_app/data/internet_connection_interceptor.dart';
 import 'package:iit_app/model/appConstants.dart';
 import 'package:iit_app/model/built_post.dart';
 import 'package:iit_app/model/deprecatedWidgetsStyle.dart';
-import 'package:iit_app/screens/accountScreen.dart';
+import 'package:iit_app/screens/newProfileScreen.dart';
 
-class AccountPage extends StatefulWidget {
+class ProfilePage extends StatefulWidget {
   @override
-  _AccountPageState createState() => _AccountPageState();
+  _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _AccountPageState extends State<AccountPage> {
+class _ProfilePageState extends State<ProfilePage> {
   BuiltProfilePost profileDetails;
 
   @override
@@ -127,6 +128,87 @@ class _AccountPageState extends State<AccountPage> {
     });
   }
 
+  void cancelClubSubscription(int clubId, BuildContext context) async {
+    await AppConstants.service
+        .toggleClubSubscription(clubId, AppConstants.djangoToken)
+        .then((snapshot) async {
+      print("status of club subscription: ${snapshot.statusCode}");
+      BuiltClubPost clubMap;
+      if (snapshot.statusCode == 200) {
+        try {
+          clubMap =
+              await AppConstants.getClubDetailsFromDatabase(clubId: clubId);
+          await AppConstants.updateClubSubscriptionInDatabase(
+              clubId: clubId,
+              isSubscribed: true,
+              currentSubscribedUsers: clubMap.subscribed_users);
+
+          await FirebaseMessaging.instance
+              .unsubscribeFromTopic('C_${clubMap.id}');
+          _reload();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Unfollowed Successfully'),
+            ),
+          );
+          return;
+        } on InternetConnectionException catch (_) {
+          AppConstants.internetErrorFlushBar.showFlushbar(context);
+          return;
+        } catch (err) {
+          print(err);
+        }
+      }
+    }).catchError((onError) {
+      if (onError is InternetConnectionException) {
+        AppConstants.internetErrorFlushBar.showFlushbar(context);
+        return;
+      }
+      print("Error: ${onError.toString()}");
+    });
+  }
+
+  void cancelEntitySubscription(int entityId, BuildContext context) async {
+    await AppConstants.service
+        .toggleEntitySubscription(entityId, AppConstants.djangoToken)
+        .then((snapshot) async {
+      print("status of club subscription: ${snapshot.statusCode}");
+      BuiltEntityPost entityMap;
+      if (snapshot.statusCode == 200) {
+        try {
+          entityMap = await AppConstants.getEntityDetailsFromDatabase(
+              entityId: entityId);
+          await AppConstants.updateEntitySubscriptionInDatabase(
+              entityId: entityId,
+              isSubscribed: true,
+              currentSubscribedUsers: entityMap.subscribed_users);
+
+          await FirebaseMessaging.instance
+              .unsubscribeFromTopic('C_${entityMap.id}');
+          _reload();
+          
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Unfollowed Successfully'),
+            ),
+          );
+          return;
+        } on InternetConnectionException catch (_) {
+          AppConstants.internetErrorFlushBar.showFlushbar(context);
+          return;
+        } catch (err) {
+          print(err);
+        }
+      }
+    }).catchError((onError) {
+      if (onError is InternetConnectionException) {
+        AppConstants.internetErrorFlushBar.showFlushbar(context);
+        return;
+      }
+      print("Error: ${onError.toString()}");
+    });
+  }
+
   Future<bool> onPop() {
     Navigator.pushNamedAndRemoveUntil(
         context, '/home', ModalRoute.withName('/root'));
@@ -141,10 +223,12 @@ class _AccountPageState extends State<AccountPage> {
           minimum: const EdgeInsets.all(2.0),
           child: RefreshIndicator(
             onRefresh: () async => _reload(),
-            child: AccountScreen(
+            child: ProfileScreen(
               profileDetails: profileDetails,
               asyncInputDialog: _asyncInputDialog,
               updateProfileDetails: updateProfileDetails,
+              cancelClubSubscriptions: cancelClubSubscription,
+              cancelEntitySubscriptions: cancelEntitySubscription,
             ),
           )),
     );

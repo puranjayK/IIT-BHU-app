@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:iit_app/model/colorConstants.dart';
 import 'package:iit_app/pages/Init_Root/initiation.dart';
 import 'package:iit_app/pages/Init_Root/root.dart';
+import 'package:iit_app/pages/account/newProfilePage.dart';
 import 'package:iit_app/pages/academics/academicsPage.dart';
 import 'package:iit_app/pages/allEntities/allEntitiesPage.dart';
 import 'package:iit_app/pages/grievance/grievance.dart';
@@ -47,6 +48,7 @@ void main() async {
       '/mess': (BuildContext context) => MessScreen(),
       '/allWorkshops': (BuildContext context) => AllWorkshopsScreen(),
       '/allEntities': (BuildContext context) => EntitiesPage(),
+      '/newProfile': (BuildContext context)=>ProfilePage() ,
       '/account': (BuildContext context) => AccountPage(),
       '/settings': (BuildContext context) => SettingsScreen(),
       '/complaints': (BuildContext context) => ComplaintsScreen(),
