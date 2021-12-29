@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:esys_flutter_share/esys_flutter_share.dart';
+// import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:iit_app/data/internet_connection_interceptor.dart';
@@ -14,6 +14,8 @@ import 'package:iit_app/services/dynamicLink.dart';
 import 'package:iit_app/ui/dialogBoxes.dart';
 import 'package:iit_app/ui/separator.dart';
 import 'package:iit_app/ui/text_style.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 // TODO: we need only isPorHolder and description rather the whole model
 
@@ -160,8 +162,13 @@ class _DescriptionState extends State<Description> {
 
       var response = await request.close();
       var bytes = await consolidateHttpClientResponseBytes(response);
-      await Share.file(
-          '${widget.map.name}', '${widget.map.id}.png', bytes, 'image/png',
+
+      final tempDir = await getTemporaryDirectory();
+      final file = await new File('${tempDir.path}/pic_to_share.png').create();
+      await file.writeAsBytes(bytes);
+
+      await Share.shareFiles(['${tempDir.path}/pic_to_share.png'],
+          subject: '${widget.map.name}',
           text:
               'Do Subscribe ${widget.map.name} to stay updated about upcoming workshops and events: ${uri.toString()}');
     } catch (err) {
@@ -170,10 +177,10 @@ class _DescriptionState extends State<Description> {
   }
 
   Future<void> _shareWithoutImage(Uri uri) async {
-    Share.text(
-        '${widget.map.name}',
-        'Do Subscribe ${widget.map.name} to stay updated about upcoming workshops and events: ${uri.toString()}',
-        'text/plain');
+    Share.share(
+      'Do Subscribe ${widget.map.name} to stay updated about upcoming workshops and events: ${uri.toString()}',
+      subject: '${widget.map.name}',
+    );
   }
 
   Widget build(context) {

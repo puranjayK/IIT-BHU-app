@@ -16,10 +16,12 @@ import 'package:iit_app/ui/dialogBoxes.dart';
 import 'package:iit_app/ui/separator.dart';
 import 'package:iit_app/ui/text_style.dart';
 import 'package:iit_app/ui/workshop_custom_widgets.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:skeleton_text/skeleton_text.dart';
-import 'package:esys_flutter_share/esys_flutter_share.dart';
+// import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:clippy_flutter/clippy_flutter.dart';
 
 class WorkshopDetailCustomWidgets {
@@ -322,10 +324,10 @@ class WorkshopDetailCustomWidgets {
         : workshopSummary.entity.small_image_url;
 
     Future<void> _shareWithoutImage(Uri uri) async {
-      Share.text(
-          '${workshopDetail.title}',
-          'Checkout this amazing workshop ${workshopDetail.title} to be held on ${workshopDetail.date} at ${workshopDetail.time}. To know more, follow this link: ${uri.toString()}',
-          'text/plain');
+      Share.share(
+        'Checkout this amazing workshop ${workshopDetail.title} to be held on ${workshopDetail.date} at ${workshopDetail.time}. To know more, follow this link: ${uri.toString()}',
+        subject: '${workshopDetail.title}',
+      );
     }
 
     Future<void> _shareWithImage(Uri uri) async {
@@ -336,8 +338,13 @@ class WorkshopDetailCustomWidgets {
         var response = await request.close();
         Uint8List bytes = await consolidateHttpClientResponseBytes(response);
 
-        await Share.file('${workshopDetail.title}', '${workshopDetail.id}.png',
-            bytes, 'image/png',
+        final tempDir = await getTemporaryDirectory();
+        final file =
+            await new File('${tempDir.path}/pic_to_share.png').create();
+        await file.writeAsBytes(bytes);
+
+        await Share.shareFiles(['${tempDir.path}/pic_to_share.png'],
+            subject: '${workshopDetail.title}',
             text:
                 'Checkout this amazing workshop ${workshopDetail.title} to be held on ${workshopDetail.date} at ${workshopDetail.time}. To know more, follow this link: ${uri.toString()}');
       } catch (err) {
