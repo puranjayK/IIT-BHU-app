@@ -56,8 +56,8 @@ Serializer<BuiltAllNotices> _$builtAllNoticesSerializer =
     new _$BuiltAllNoticesSerializer();
 Serializer<BuiltNoticeDetail> _$builtNoticeDetailSerializer =
     new _$BuiltNoticeDetailSerializer();
-Serializer<NoticeCreate> _$noticeCreateSerializer =
-    new _$NoticeCreateSerializer();
+Serializer<NoticeCreatePost> _$noticeCreatePostSerializer =
+    new _$NoticeCreatePostSerializer();
 
 class _$ConfigVarSerializer implements StructuredSerializer<ConfigVar> {
   @override
@@ -2831,33 +2831,43 @@ class _$BuiltNoticeDetailSerializer
   }
 }
 
-class _$NoticeCreateSerializer implements StructuredSerializer<NoticeCreate> {
+class _$NoticeCreatePostSerializer
+    implements StructuredSerializer<NoticeCreatePost> {
   @override
-  final Iterable<Type> types = const [NoticeCreate, _$NoticeCreate];
+  final Iterable<Type> types = const [NoticeCreatePost, _$NoticeCreatePost];
   @override
-  final String wireName = 'NoticeCreate';
+  final String wireName = 'NoticeCreatePost';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, NoticeCreate object,
+  Iterable<Object> serialize(Serializers serializers, NoticeCreatePost object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'tag_name',
-      serializers.serialize(object.tag_name,
+      'title',
+      serializers.serialize(object.title,
           specifiedType: const FullType(String)),
+      'date',
+      serializers.serialize(object.date, specifiedType: const FullType(String)),
     ];
-    if (object.id != null) {
+    if (object.description != null) {
       result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
+        ..add('description')
+        ..add(serializers.serialize(object.description,
+            specifiedType: const FullType(String)));
+    }
+    if (object.importance != null) {
+      result
+        ..add('importance')
+        ..add(serializers.serialize(object.importance,
             specifiedType: const FullType(int)));
     }
     return result;
   }
 
   @override
-  NoticeCreate deserialize(Serializers serializers, Iterable<Object> serialized,
+  NoticeCreatePost deserialize(
+      Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new NoticeCreateBuilder();
+    final result = new NoticeCreatePostBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -2865,13 +2875,21 @@ class _$NoticeCreateSerializer implements StructuredSerializer<NoticeCreate> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'tag_name':
-          result.tag_name = serializers.deserialize(value,
+        case 'title':
+          result.title = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'description':
+          result.description = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'date':
+          result.date = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'importance':
+          result.importance = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -7412,89 +7430,121 @@ class BuiltNoticeDetailBuilder
   }
 }
 
-class _$NoticeCreate extends NoticeCreate {
+class _$NoticeCreatePost extends NoticeCreatePost {
   @override
-  final int id;
+  final String title;
   @override
-  final String tag_name;
+  final String description;
+  @override
+  final String date;
+  @override
+  final int importance;
 
-  factory _$NoticeCreate([void Function(NoticeCreateBuilder) updates]) =>
-      (new NoticeCreateBuilder()..update(updates)).build();
+  factory _$NoticeCreatePost(
+          [void Function(NoticeCreatePostBuilder) updates]) =>
+      (new NoticeCreatePostBuilder()..update(updates)).build();
 
-  _$NoticeCreate._({this.id, this.tag_name}) : super._() {
-    if (tag_name == null) {
-      throw new BuiltValueNullFieldError('NoticeCreate', 'tag_name');
+  _$NoticeCreatePost._(
+      {this.title, this.description, this.date, this.importance})
+      : super._() {
+    if (title == null) {
+      throw new BuiltValueNullFieldError('NoticeCreatePost', 'title');
+    }
+    if (date == null) {
+      throw new BuiltValueNullFieldError('NoticeCreatePost', 'date');
     }
   }
 
   @override
-  NoticeCreate rebuild(void Function(NoticeCreateBuilder) updates) =>
+  NoticeCreatePost rebuild(void Function(NoticeCreatePostBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  NoticeCreateBuilder toBuilder() => new NoticeCreateBuilder()..replace(this);
+  NoticeCreatePostBuilder toBuilder() =>
+      new NoticeCreatePostBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is NoticeCreate &&
-        id == other.id &&
-        tag_name == other.tag_name;
+    return other is NoticeCreatePost &&
+        title == other.title &&
+        description == other.description &&
+        date == other.date &&
+        importance == other.importance;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, id.hashCode), tag_name.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, title.hashCode), description.hashCode), date.hashCode),
+        importance.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('NoticeCreate')
-          ..add('id', id)
-          ..add('tag_name', tag_name))
+    return (newBuiltValueToStringHelper('NoticeCreatePost')
+          ..add('title', title)
+          ..add('description', description)
+          ..add('date', date)
+          ..add('importance', importance))
         .toString();
   }
 }
 
-class NoticeCreateBuilder
-    implements Builder<NoticeCreate, NoticeCreateBuilder> {
-  _$NoticeCreate _$v;
+class NoticeCreatePostBuilder
+    implements Builder<NoticeCreatePost, NoticeCreatePostBuilder> {
+  _$NoticeCreatePost _$v;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _title;
+  String get title => _$this._title;
+  set title(String title) => _$this._title = title;
 
-  String _tag_name;
-  String get tag_name => _$this._tag_name;
-  set tag_name(String tag_name) => _$this._tag_name = tag_name;
+  String _description;
+  String get description => _$this._description;
+  set description(String description) => _$this._description = description;
 
-  NoticeCreateBuilder();
+  String _date;
+  String get date => _$this._date;
+  set date(String date) => _$this._date = date;
 
-  NoticeCreateBuilder get _$this {
+  int _importance;
+  int get importance => _$this._importance;
+  set importance(int importance) => _$this._importance = importance;
+
+  NoticeCreatePostBuilder();
+
+  NoticeCreatePostBuilder get _$this {
     if (_$v != null) {
-      _id = _$v.id;
-      _tag_name = _$v.tag_name;
+      _title = _$v.title;
+      _description = _$v.description;
+      _date = _$v.date;
+      _importance = _$v.importance;
       _$v = null;
     }
     return this;
   }
 
   @override
-  void replace(NoticeCreate other) {
+  void replace(NoticeCreatePost other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$NoticeCreate;
+    _$v = other as _$NoticeCreatePost;
   }
 
   @override
-  void update(void Function(NoticeCreateBuilder) updates) {
+  void update(void Function(NoticeCreatePostBuilder) updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$NoticeCreate build() {
-    final _$result = _$v ?? new _$NoticeCreate._(id: id, tag_name: tag_name);
+  _$NoticeCreatePost build() {
+    final _$result = _$v ??
+        new _$NoticeCreatePost._(
+            title: title,
+            description: description,
+            date: date,
+            importance: importance);
     replace(_$result);
     return _$result;
   }

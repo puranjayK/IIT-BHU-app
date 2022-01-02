@@ -40,7 +40,7 @@ part 'serializers.g.dart';
   Token,
   BuiltAllNotices,
   BuiltNoticeDetail,
-  NoticeCreate,
+  NoticeCreatePost,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

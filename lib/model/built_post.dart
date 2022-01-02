@@ -696,14 +696,16 @@ abstract class BuiltNoticeDetail implements Built<BuiltNoticeDetail,BuiltNoticeD
       _$builtNoticeDetailSerializer;
 }
 
-abstract class NoticeCreate implements Built<NoticeCreate, NoticeCreateBuilder> {
+abstract class NoticeCreatePost implements Built<NoticeCreatePost, NoticeCreatePostBuilder> {
+  String get title;
   @nullable
-  int get id;
+  String get description;
+  String get date;
+  @nullable
+  int get importance;
 
-  String get tag_name;
-
-  NoticeCreate._();
-  factory NoticeCreate([updates(NoticeCreateBuilder b)]) = _$NoticeCreate;
-  static Serializer<NoticeCreate> get serializer => _$noticeCreateSerializer;
+  NoticeCreatePost._();
+  factory NoticeCreatePost([updates(NoticeCreatePostBuilder b)]) = _$NoticeCreatePost;
+  static Serializer<NoticeCreatePost> get serializer => _$noticeCreatePostSerializer;
 }
 
