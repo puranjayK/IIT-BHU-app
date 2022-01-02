@@ -72,7 +72,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
             Column(
               children: [
                 Container(
-                height: screensize.height/7.75,
+                height: screensize.height/8,
                 width: screensize.width/2.5,
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -125,7 +125,7 @@ class _EmergencyScreenState extends State<EmergencyScreen> {
         Column(
               children: [
                 Container(
-                height: screensize.height/7.75,
+                height: screensize.height/8,
                 width: screensize.width/2.5,
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
