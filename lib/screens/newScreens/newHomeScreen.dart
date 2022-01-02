@@ -30,6 +30,7 @@ class _NewHomeScreenState extends State<NewHomeScreen>
   void onRefresh() async {
     try {
       await AppConstants.updateAndPopulateWorkshops();
+      await AppConstants.updateAndPopulateNotices();
     } on InternetConnectionException catch (_) {
       AppConstants.internetErrorFlushBar.showFlushbar(context);
       return;
