@@ -2,6 +2,7 @@ import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:iit_app/model/built_post.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:iit_app/pages/newhomescreen/notice_board.dart';
 import 'built_value_converter.dart';
 import 'internet_connection_interceptor.dart';
 part 'post_api_service.chopper.dart';
@@ -308,6 +309,42 @@ abstract class PostApiService extends ChopperService {
   Future<Response<BuiltList<ConfigVar>>> getConfigVars();
 
 //! ------------------------------------------ Other (Team,Login,ConfigVar) end point APIs --------------------------------------------------------------
+
+//? --------------------------------------------------------------------------------------------------------------------
+//? --------------------------------------------------------------------------------------------------------------------
+
+//! ------------------------------------------ Noticeboard end point APIs ------------------------------------------------------------------------------
+
+  //? -------------------------------- Get ------------------------------------
+  @Get(path: '/noticeboard/')
+  Future<Response<BuiltList<BuiltAllNotices>>> getAllNotices();
+
+  @Get(path: '/noticeboard/{id}/')
+  Future<Response<BuiltNoticeDetail>> getNotice(@Path('id') int id);
+
+  @Get(path: '/noticeboard/{id}/downvote/')
+  Future<Response<BuiltNoticeDetail>> getNoticeDownvote(@Path('id') int id);
+
+  @Get(path: '/noticeboard/{id}/upvote/')
+  Future<Response<BuiltNoticeDetail>> getNoticeUpvote(@Path('id') int id);
+
+  //? -------------------------------- Post -----------------------------------
+  @Post(path: '/noticeboard/create/')
+  Future<Response<NoticeCreatePost>> createNotice();
+
+  //? -------------------------------- Put ------------------------------------
+  @Put(path: '/noticeboard/{id}/')
+  Future<Response<BuiltNoticeDetail>> updateNoticeByPut(@Path('id') int id, @Body() NoticeCreatePost body);
+
+  //? -------------------------------- Patch ----------------------------------
+  @Patch(path: '/noticeboard/{id}/')
+  Future<Response<BuiltNoticeDetail>> updateNoticeByPatch(@Path('id') int id, @Body() NoticeCreatePost body);
+
+  //? -------------------------------- Delete ---------------------------------
+  @Delete(path: '/noticeboard/{id}/')
+  Future<Response> deleteNotice(@Path('id') int id);
+
+//! ------------------------------------------ Noticeboard end point APIs ------------------------------------------------------------------------------
 
   static PostApiService create() {
     final client = ChopperClient(
