@@ -83,7 +83,7 @@ class AppConstants {
   }
 
   static PostApiService service;
-
+  static BuiltList<BuiltAllNotices> noticeFromDatabase;
   static BuiltList<BuiltWorkshopSummaryPost> workshopFromDatabase;
   static BuiltList<BuiltAllCouncilsPost> councilsSummaryfromDatabase;
   static BuiltList<EntityListPost> entitiesSummaryFromDatabase;
@@ -258,6 +258,33 @@ class AppConstants {
       print(err);
     }
     print('workshops fetched and updated ');
+  }
+
+  static Future updateAndPopulateNotices() async {
+    DatabaseHelper helper = DatabaseHelper.instance;
+    var database = await helper.database;
+
+    print('fetching notices infos from json for updation');
+    try {
+      Response<BuiltList<BuiltAllNotices>> noticesSnapshots =
+          await service.getAllNotices();
+      //print(noticesSnapshots.body.toString());
+      if (noticesSnapshots.body != null) {
+        await DatabaseWrite.deleteAllNotices(db: database);
+        final notices = noticesSnapshots.body;
+        for (var notice in notices) {
+          await DatabaseWrite.insertNoticesIntoDatabase(
+              db: database, notice: notice);
+          //print("notice added: ${notice.title}");
+        }
+        noticeFromDatabase = notices;
+      }
+    } on InternetConnectionException catch (error) {
+      throw error;
+    } catch (err) {
+      print(err);
+    }
+    print('notices fetched and updated ');
   }
 
   static Future updateAndPopulateAllEntities() async {

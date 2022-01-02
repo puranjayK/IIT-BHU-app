@@ -17,6 +17,15 @@ class DatabaseWrite {
     );
   }
 
+static Future insertNoticesIntoDatabase(
+      {@required Database db, @required BuiltAllNotices notice}) async {
+    await db.insert(
+      StringConst.noticeBoardString,
+      DatabaseMapping.noticeInfoToMap(notice),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
   static Future insertCouncilSummaryIntoDatabase(
       {@required Database db,
       @required BuiltList<BuiltAllCouncilsPost> councils}) async {
@@ -199,6 +208,10 @@ class DatabaseWrite {
 
   static Future deleteAllWorkshopsSummary({@required Database db}) async {
     await db.delete(StringConst.workshopSummaryString);
+  }
+
+  static Future deleteAllNotices({@required Database db}) async {
+    await db.delete(StringConst.noticeBoardString);
   }
 
   static Future deleteAllCouncilsSummary({@required Database db}) async {

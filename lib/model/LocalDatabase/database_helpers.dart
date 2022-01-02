@@ -72,6 +72,24 @@ class DatabaseHelper {
         '       ${StringConst.dateString} DEFAULT "", '
         '       ${StringConst.timeString} DEFAULT "") WITHOUT ROWID');
 
+//for homepage
+    await db.execute('      CREATE TABLE ${StringConst.noticeBoardString} ('
+        '        ${StringConst.idString} INTEGER PRIMARY KEY, '
+        '        ${StringConst.titleString} DEFAULT "",'
+        '        ${StringConst.importanceString} INTEGER DEFAULT 0, '
+        '        ${StringConst.dateString} DEFAULT "") WITHOUT ROWID');
+
+//for notice detail
+    await db.execute('      CREATE TABLE ${StringConst.noticeDetailString} ('
+        '        ${StringConst.idString} INTEGER PRIMARY KEY,'
+        '        ${StringConst.titleString} DEFAULT "",'
+        '        ${StringConst.descriptionString} DEFAULT "",'
+        '        ${StringConst.importanceString} INTEGER DEFAULT 0,'
+        '        ${StringConst.noticeUpvoteString} INTEGER DEFAULT 0,'
+        '        ${StringConst.noticeDownvoteString} INTEGER DEFAULT 0,'
+        '        ${StringConst.noticeHasVotedString} DEFAULT "",'
+        '        ${StringConst.dateString} DEFAULT "") WITHOUT ROWID');
+
 // for council buttons
 
     await db.execute('CREATE TABLE ${StringConst.allCouncislSummaryString} ('
