@@ -2,7 +2,6 @@ import 'package:chopper/chopper.dart';
 import 'package:flutter/material.dart';
 import 'package:iit_app/model/built_post.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:iit_app/pages/newhomescreen/notice_board.dart';
 import 'built_value_converter.dart';
 import 'internet_connection_interceptor.dart';
 part 'post_api_service.chopper.dart';
@@ -334,11 +333,13 @@ abstract class PostApiService extends ChopperService {
 
   //? -------------------------------- Put ------------------------------------
   @Put(path: '/noticeboard/{id}/')
-  Future<Response<BuiltNoticeDetail>> updateNoticeByPut(@Path('id') int id, @Body() NoticeCreatePost body);
+  Future<Response<BuiltNoticeDetail>> updateNoticeByPut(
+      @Path('id') int id, @Body() NoticeCreatePost body);
 
   //? -------------------------------- Patch ----------------------------------
   @Patch(path: '/noticeboard/{id}/')
-  Future<Response<BuiltNoticeDetail>> updateNoticeByPatch(@Path('id') int id, @Body() NoticeCreatePost body);
+  Future<Response<BuiltNoticeDetail>> updateNoticeByPatch(
+      @Path('id') int id, @Body() NoticeCreatePost body);
 
   //? -------------------------------- Delete ---------------------------------
   @Delete(path: '/noticeboard/{id}/')
