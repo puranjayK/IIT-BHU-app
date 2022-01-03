@@ -82,7 +82,7 @@ class _NewHomeScreenState extends State<NewHomeScreen>
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: const EdgeInsets.only(left: 18.0, top: 1.0, bottom: 8.0),
+              padding: const EdgeInsets.only(left: 18.0, bottom: 8.0),
               child: Text(
                 'Noticeboard',
                 style: TextStyle(

@@ -25,8 +25,8 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screensize = MediaQuery.of(context).size;
-    var cardwidth = screensize.width * 0.4;
-    var cardheight = screensize.height * 0.25;
+    var cardwidth = screensize.width * 0.445;
+    var cardheight = screensize.height * 0.245;
     return GestureDetector(
       onTap: null,
       child: Container(
@@ -60,8 +60,8 @@ class EventCard extends StatelessWidget {
             ),
             if (eventstatus == true)
               Positioned(
-                right: cardwidth * 0.02,
-                bottom: cardheight * 1.045,
+                top: 0.0,
+                right: 5.0,
                 child: EventOnline(),
               ),
           ],
