@@ -4,6 +4,7 @@ import 'package:iit_app/pages/Home/homePage.dart';
 import 'package:iit_app/pages/club_entity/clubPage.dart';
 import 'package:iit_app/pages/club_entity/entityPage.dart';
 import 'package:iit_app/pages/login/loginPage.dart';
+import 'package:iit_app/pages/newHomePage/newHomePage.dart';
 import 'package:iit_app/services/pushNotification.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:iit_app/pages/worshop_detail/workshopDetailPage.dart';
@@ -106,7 +107,7 @@ class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     return (AppConstants.isLoggedIn || AppConstants.isGuest)
-        ? HomePage()
+        ? NewHomePage()
         : LoginPage();
   }
 }

@@ -43,7 +43,8 @@ dependencies:
   skeleton_text: ^1.0.0
   flutter_spinkit: ^4.1.2
   google_maps_flutter:
-
+  intl:
+  fab_circular_menu:
   image_picker: ^0.6.7+14
   photo_view: ^0.10.3
   flushbar: ^1.10.4
@@ -65,3 +66,12 @@ flutter:
 
   assets:
     - assets/
+    - assets/academics/
+  fonts:
+     - family: Gilroy
+       fonts:
+         - asset: assets/fonts/Gilroy-Regular.ttf
+         - asset: assets/fonts/Gilroy-SemiBold.ttf
+           weight: 700
+         - asset: assets/fonts/Gilroy-Medium.ttf
+           weight: 500

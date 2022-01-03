@@ -50,6 +50,34 @@ class DatabaseQuery {
     return workshops;
   }
 
+  static Future<BuiltList<BuiltAllNotices>> getAllNotices(
+      {@required Database db}) async {
+    List<Map> maps = await db.query(
+      StringConst.noticeBoardString,
+      columns: [
+        StringConst.idString,
+        StringConst.titleString,
+        StringConst.dateString,
+        StringConst.importanceString,
+      ],
+    );
+    if (maps.isEmpty) {
+      return null;
+    }
+
+    BuiltList<BuiltAllNotices> list = BuiltList<BuiltAllNotices>([]);
+    var builder = list.toBuilder();
+
+    for (var map in maps) {
+
+      BuiltAllNotices notice =
+          DatabaseMapping.noticesFromMap(map);
+      builder.add(notice);
+    }
+    var notices = builder.build();
+    return notices;
+  }
+
   static Future<BuiltAllCouncilsPost> getCouncilsSummaryById(
       {@required Database db, @required int councilId}) async {
     if (councilId == null) return null;

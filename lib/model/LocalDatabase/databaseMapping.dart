@@ -168,6 +168,16 @@ class DatabaseMapping {
     return map;
   }
 
+  static Map<String, dynamic> noticeInfoToMap(BuiltAllNotices notice) {
+    Map<String, dynamic> map = {
+      StringConst.idString: notice.id,
+      StringConst.titleString: notice.title ?? "",
+      StringConst.dateString: notice.date,
+      StringConst.importanceString: notice.importance??0
+    };
+    return map;
+  }
+
 // -------------------------------------------------------------------------------------------------------------------------------------------------
 // !                                        Converting map to data models
 // -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -243,5 +253,15 @@ class DatabaseMapping {
       ..small_image_url = map[StringConst.smallImageUrlString]
       ..large_image_url = map[StringConst.largeImageUrlString]);
     return clubSummary;
+  }
+
+  static BuiltAllNotices noticesFromMap(dynamic map) {
+    final notices = BuiltAllNotices((b) => b
+      ..id = map[StringConst.idString]??""
+      ..title = map[StringConst.titleString]
+      ..date = map[StringConst.dateString]
+      ..importance = map[StringConst.importanceString]??0,
+      );
+    return notices;
   }
 }
