@@ -312,7 +312,41 @@ abstract class PostApiService extends ChopperService {
 //? --------------------------------------------------------------------------------------------------------------------
 //? --------------------------------------------------------------------------------------------------------------------
 
-//! ------------------------------------------ Other (Team,Login,ConfigVar) end point APIs --------------------------------------------------------------
+//! ------------------------------------------ Noticeboard end point APIs ------------------------------------------------------------------------------
+
+  //? -------------------------------- Get ------------------------------------
+  @Get(path: '/noticeboard/')
+  Future<Response<BuiltList<BuiltAllNotices>>> getAllNotices();
+
+  @Get(path: '/noticeboard/{id}/')
+  Future<Response<BuiltNoticeDetail>> getNotice(
+      @Header('Authorization') String token, @Path('id') int id);
+
+  @Get(path: '/noticeboard/{id}/downvote/')
+  Future<Response<BuiltNoticeDetail>> getNoticeDownvote(@Path('id') int id);
+
+  @Get(path: '/noticeboard/{id}/upvote/')
+  Future<Response<BuiltNoticeDetail>> getNoticeUpvote(@Path('id') int id);
+
+  //? -------------------------------- Post -----------------------------------
+  @Post(path: '/noticeboard/create/')
+  Future<Response<NoticeCreatePost>> createNotice();
+
+  //? -------------------------------- Put ------------------------------------
+  @Put(path: '/noticeboard/{id}/')
+  Future<Response<BuiltNoticeDetail>> updateNoticeByPut(
+      @Path('id') int id, @Body() NoticeCreatePost body);
+
+  //? -------------------------------- Patch ----------------------------------
+  @Patch(path: '/noticeboard/{id}/')
+  Future<Response<BuiltNoticeDetail>> updateNoticeByPatch(
+      @Path('id') int id, @Body() NoticeCreatePost body);
+
+  //? -------------------------------- Delete ---------------------------------
+  @Delete(path: '/noticeboard/{id}/')
+  Future<Response> deleteNotice(@Path('id') int id);
+
+//! ------------------------------------------ Noticeboard end point APIs ------------------------------------------------------------------------------
 
 //! ------------------------------------------ Grievance (Count) end point APIs --------------------------------------------------------------
 

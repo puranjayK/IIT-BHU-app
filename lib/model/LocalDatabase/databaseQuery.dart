@@ -50,6 +50,58 @@ class DatabaseQuery {
     return workshops;
   }
 
+  static Future<BuiltList<BuiltAllNotices>> getAllNoticesSummary(
+      {@required Database db}) async {
+    List<Map> maps = await db.query(
+      StringConst.noticeSummaryString,
+      columns: [
+        StringConst.idString,
+        StringConst.titleString,
+        StringConst.dateString,
+        StringConst.importanceString,
+      ],
+    );
+    if (maps.isEmpty) {
+      return null;
+    }
+
+    BuiltList<BuiltAllNotices> list = BuiltList<BuiltAllNotices>([]);
+    var builder = list.toBuilder();
+
+    for (var map in maps) {
+      BuiltAllNotices notice = DatabaseMapping.noticeSummaryFromMap(map);
+      builder.add(notice);
+    }
+    var notices = builder.build();
+    return notices;
+  }
+
+  static Future<BuiltNoticeDetail> getNoticeDetail(
+      {@required Database db, @required int noticeId}) async {
+    List<Map> maps = await db.query(
+      StringConst.noticeDetailString,
+      columns: [
+        StringConst.idString,
+        StringConst.titleString,
+        StringConst.dateString,
+        StringConst.importanceString,
+        StringConst.noticeDescription,
+        StringConst.noticeUpvoteString,
+        StringConst.noticeDownvoteString,
+        StringConst.noticeHasVotedString,
+      ],
+      where: '${StringConst.idString}  = $noticeId',
+    );
+    if (maps.isEmpty) {
+      return null;
+    }
+
+    var map = maps[0];
+    
+    BuiltNoticeDetail notice = DatabaseMapping.noticeDetailFromMap(map);
+    return notice;
+  }
+
   static Future<BuiltAllCouncilsPost> getCouncilsSummaryById(
       {@required Database db, @required int councilId}) async {
     if (councilId == null) return null;

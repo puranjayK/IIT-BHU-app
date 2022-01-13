@@ -13,7 +13,7 @@ class DatabaseHelper {
   // static final _databaseNameTwo = 'WorkshopInfoDatabaseTwo.db';
 
 // Increment this version when you need to change the schema.
-  static final _databaseVersion = 1;
+  static final _databaseVersion = 2;
 
 // Make this a singleton class.
   DatabaseHelper._privateConstructor();
@@ -51,8 +51,34 @@ class DatabaseHelper {
       path,
       version: _databaseVersion,
       onCreate: _onDatabaseCreate,
+      onUpgrade: _onDatabaseUpgrade,
     );
   }
+
+  //for version upgrade
+  static Future _onDatabaseUpgrade(
+      Database db, int oldVersion, int newVersion) async {
+    if (oldVersion == 1) {
+      //for homepage
+      await db.execute('      CREATE TABLE ${StringConst.noticeSummaryString} ('
+          '        ${StringConst.idString} INTEGER PRIMARY KEY, '
+          '        ${StringConst.titleString} DEFAULT "",'
+          '        ${StringConst.importanceString} INTEGER DEFAULT 0, '
+          '        ${StringConst.dateString} DEFAULT "") WITHOUT ROWID');
+
+//for notice detail
+      await db.execute('      CREATE TABLE ${StringConst.noticeDetailString} ('
+          '        ${StringConst.idString} INTEGER PRIMARY KEY,'
+          '        ${StringConst.titleString} DEFAULT "",'
+          '        ${StringConst.descriptionString} DEFAULT "",'
+          '        ${StringConst.importanceString} INTEGER DEFAULT 0,'
+          '        ${StringConst.noticeUpvoteString} INTEGER DEFAULT 0,'
+          '        ${StringConst.noticeDownvoteString} INTEGER DEFAULT 0,'
+          '        ${StringConst.noticeHasVotedString} DEFAULT "",'
+          '        ${StringConst.dateString} DEFAULT "") WITHOUT ROWID');
+    }
+  }
+
   // SQL string to create the database
 
   static Future _onDatabaseCreate(Database db, int version) async {
@@ -71,6 +97,24 @@ class DatabaseHelper {
         '       ${StringConst.titleString} DEFAULT "", '
         '       ${StringConst.dateString} DEFAULT "", '
         '       ${StringConst.timeString} DEFAULT "") WITHOUT ROWID');
+
+//for homepage
+    await db.execute('      CREATE TABLE ${StringConst.noticeSummaryString} ('
+        '        ${StringConst.idString} INTEGER PRIMARY KEY, '
+        '        ${StringConst.titleString} DEFAULT "",'
+        '        ${StringConst.importanceString} INTEGER DEFAULT 0, '
+        '        ${StringConst.dateString} DEFAULT "") WITHOUT ROWID');
+
+//for notice detail
+    await db.execute('      CREATE TABLE ${StringConst.noticeDetailString} ('
+        '        ${StringConst.idString} INTEGER PRIMARY KEY,'
+        '        ${StringConst.titleString} DEFAULT "",'
+        '        ${StringConst.descriptionString} DEFAULT "",'
+        '        ${StringConst.importanceString} INTEGER DEFAULT 0,'
+        '        ${StringConst.noticeUpvoteString} INTEGER DEFAULT 0,'
+        '        ${StringConst.noticeDownvoteString} INTEGER DEFAULT 0,'
+        '        ${StringConst.noticeHasVotedString} DEFAULT "",'
+        '        ${StringConst.dateString} DEFAULT "") WITHOUT ROWID');
 
 // for council buttons
 

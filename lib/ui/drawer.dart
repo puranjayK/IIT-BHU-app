@@ -104,6 +104,8 @@ class SideBar extends Drawer {
               ),
             ),
             getNavItem(Icons.home, "Home", '/home', homeRoute: true),
+            getNavItem(Icons.home, "New Home", '/newhome'),
+
             getNavItem(Icons.map, "Map", '/mapPage'),
             // getNavItem(Icons.local_dining, "Mess management", '/mess'),
             getNavItem(

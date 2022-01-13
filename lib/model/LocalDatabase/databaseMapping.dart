@@ -168,6 +168,30 @@ class DatabaseMapping {
     return map;
   }
 
+  static Map<String, dynamic> noticeSummaryToMap(BuiltAllNotices notice) {
+    Map<String, dynamic> map = {
+      StringConst.idString: notice.id,
+      StringConst.titleString: notice.title ?? "",
+      StringConst.dateString: notice.date,
+      StringConst.importanceString: notice.importance ?? 0
+    };
+    return map;
+  }
+
+  static Map<String, dynamic> noticeDetailToMap(BuiltNoticeDetail notice) {
+    Map<String, dynamic> map = {
+      StringConst.idString: notice.id,
+      StringConst.titleString: notice.title ?? "",
+      StringConst.dateString: notice.date,
+      StringConst.importanceString: notice.importance ?? 0,
+      StringConst.noticeDescription: notice.description ??"",
+      StringConst.noticeUpvoteString: notice.upvotes??0,
+      StringConst.noticeDownvoteString: notice.downvotes??0,
+      StringConst.noticeHasVotedString: notice.has_voted??"false",
+    };
+    return map;
+  }
+
 // -------------------------------------------------------------------------------------------------------------------------------------------------
 // !                                        Converting map to data models
 // -------------------------------------------------------------------------------------------------------------------------------------------------
@@ -243,5 +267,31 @@ class DatabaseMapping {
       ..small_image_url = map[StringConst.smallImageUrlString]
       ..large_image_url = map[StringConst.largeImageUrlString]);
     return clubSummary;
+  }
+
+  static BuiltAllNotices noticeSummaryFromMap(dynamic map) {
+    final notices = BuiltAllNotices(
+      (b) => b
+        ..id = map[StringConst.idString] ?? ""
+        ..title = map[StringConst.titleString]
+        ..date = map[StringConst.dateString]
+        ..importance = map[StringConst.importanceString] ?? 0,
+    );
+    return notices;
+  }
+
+  static BuiltNoticeDetail noticeDetailFromMap(dynamic map) {
+    final notice = BuiltNoticeDetail(
+      (b) => b
+        ..id = map[StringConst.idString] ?? ""
+        ..title = map[StringConst.titleString]
+        ..date = map[StringConst.dateString]
+        ..importance = map[StringConst.importanceString] ?? 0
+        ..description = map[StringConst.noticeDescription]??""
+        ..upvotes =map[StringConst.noticeUpvoteString]??0
+        ..downvotes=map[StringConst.noticeDownvoteString]??0
+        ..has_voted=map[StringConst.noticeHasVotedString]??"false"
+    );
+    return notice;
   }
 }

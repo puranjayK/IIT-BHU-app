@@ -216,6 +216,9 @@ abstract class BuiltWorkshopSummaryPost
   String get time;
 
   @nullable
+  String get image_url;
+
+  @nullable
   BuiltList<TagDetail> get tags;
 
   BuiltWorkshopSummaryPost._();
@@ -653,6 +656,64 @@ abstract class Token implements Built<Token, TokenBuilder> {
   Token._();
   factory Token([updates(TokenBuilder b)]) = _$Token;
   static Serializer<Token> get serializer => _$tokenSerializer;
+}
+
+abstract class BuiltAllNotices
+    implements Built<BuiltAllNotices, BuiltAllNoticesBuilder> {
+  @nullable
+  int get id;
+  String get title;
+  String get date;
+  @nullable
+  int get importance;
+
+  BuiltAllNotices._();
+  factory BuiltAllNotices([updates(BuiltAllNoticesBuilder b)]) =
+      _$BuiltAllNotices;
+  static Serializer<BuiltAllNotices> get serializer =>
+      _$builtAllNoticesSerializer;
+}
+
+abstract class BuiltNoticeDetail
+    implements Built<BuiltNoticeDetail, BuiltNoticeDetailBuilder> {
+  @nullable
+  int get id;
+  String get title;
+  @nullable
+  String get description;
+  String get date;
+  @nullable
+  int get upvotes;
+  @nullable
+  int get downvotes;
+  @nullable
+  int get importance;
+  @nullable
+  bool get has_voted;
+
+  BuiltNoticeDetail._();
+
+  factory BuiltNoticeDetail([updates(BuiltNoticeDetailBuilder b)]) =
+      _$BuiltNoticeDetail;
+
+  static Serializer<BuiltNoticeDetail> get serializer =>
+      _$builtNoticeDetailSerializer;
+}
+
+abstract class NoticeCreatePost
+    implements Built<NoticeCreatePost, NoticeCreatePostBuilder> {
+  String get title;
+  @nullable
+  String get description;
+  String get date;
+  @nullable
+  int get importance;
+
+  NoticeCreatePost._();
+  factory NoticeCreatePost([updates(NoticeCreatePostBuilder b)]) =
+      _$NoticeCreatePost;
+  static Serializer<NoticeCreatePost> get serializer =>
+      _$noticeCreatePostSerializer;
 }
 
 // !--------------------------------------------------------------------------------------------------------------------

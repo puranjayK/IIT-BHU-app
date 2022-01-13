@@ -3,6 +3,14 @@ class StringConst {
 
   static const String idString = 'id';
 
+  static const String noticeSummaryString = 'noticeSummary'; //table name
+  static const String noticeDetailString = 'noticeDetail';
+  static const String noticeDescription = 'description';
+  static const String noticeHasVotedString = 'has_voted';
+  static const String importanceString = 'importance';
+  static const String noticeUpvoteString = 'upvote';
+  static const String noticeDownvoteString = 'downvote';
+
   static const String clubIdString = 'clubId';
   static const String clubString = 'club';
   static const String councilIdString = 'councilId';

@@ -17,6 +17,25 @@ class DatabaseWrite {
     );
   }
 
+  static Future insertNoticesSummaryIntoDatabase(
+      {@required Database db, @required BuiltAllNotices notice}) async {
+    await db.insert(
+      StringConst.noticeSummaryString,
+      DatabaseMapping.noticeSummaryToMap(notice),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  static Future insertNoticeDetailIntoDatabase(
+      {@required Database db, @required BuiltNoticeDetail notice}) async {
+    await db.insert(
+      StringConst.noticeDetailString,
+      DatabaseMapping.noticeDetailToMap(notice),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    print("success");
+  }
+
   static Future insertCouncilSummaryIntoDatabase(
       {@required Database db,
       @required BuiltList<BuiltAllCouncilsPost> councils}) async {
@@ -201,6 +220,22 @@ class DatabaseWrite {
     await db.delete(StringConst.workshopSummaryString);
   }
 
+  static Future deleteAllNotices({@required Database db}) async {
+    await db.delete(StringConst.noticeSummaryString);
+  }
+
+  static Future deleteNoticeDetail(
+      {@required Database db, @required int noticeId}) async {
+    await db.delete(StringConst.noticeDetailString,
+        where: '${StringConst.idString} = $noticeId');
+  }
+
+  static Future deleteAllNoticeDetail({@required Database db}) async {
+    await db.delete(
+      StringConst.noticeDetailString,
+    );
+  }
+
   static Future deleteAllCouncilsSummary({@required Database db}) async {
     await db.delete(StringConst.allCouncislSummaryString);
   }
@@ -238,5 +273,7 @@ class DatabaseWrite {
     await deleteAllClubDetails(db: db);
     await deleteAllEntitySummary(db: db);
     await deleteAllEntityDetails(db: db);
+    await deleteAllNotices(db: db);
+    deleteAllNoticeDetail(db: db);
   }
 }

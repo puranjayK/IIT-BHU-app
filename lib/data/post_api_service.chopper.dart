@@ -440,6 +440,59 @@ class _$PostApiService extends PostApiService {
     return client.send<BuiltList<ConfigVar>, ConfigVar>($request);
   }
 
+  Future<Response<BuiltList<BuiltAllNotices>>> getAllNotices() {
+    final $url = '/noticeboard/';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<BuiltList<BuiltAllNotices>, BuiltAllNotices>($request);
+  }
+
+  Future<Response<BuiltNoticeDetail>> getNotice(String token, int id) {
+    final $url = '/noticeboard/${id}/';
+    final $headers = {'Authorization': token};
+    final $request = Request('GET', $url, client.baseUrl, headers: $headers);
+    return client.send<BuiltNoticeDetail, BuiltNoticeDetail>($request);
+  }
+
+  Future<Response<BuiltNoticeDetail>> getNoticeDownvote(int id) {
+    final $url = '/noticeboard/${id}/downvote/';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<BuiltNoticeDetail, BuiltNoticeDetail>($request);
+  }
+
+  Future<Response<BuiltNoticeDetail>> getNoticeUpvote(int id) {
+    final $url = '/noticeboard/${id}/upvote/';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<BuiltNoticeDetail, BuiltNoticeDetail>($request);
+  }
+
+  Future<Response<NoticeCreatePost>> createNotice() {
+    final $url = '/noticeboard/create/';
+    final $request = Request('POST', $url, client.baseUrl);
+    return client.send<NoticeCreatePost, NoticeCreatePost>($request);
+  }
+
+  Future<Response<BuiltNoticeDetail>> updateNoticeByPut(
+      int id, NoticeCreatePost body) {
+    final $url = '/noticeboard/${id}/';
+    final $body = body;
+    final $request = Request('PUT', $url, client.baseUrl, body: $body);
+    return client.send<BuiltNoticeDetail, BuiltNoticeDetail>($request);
+  }
+
+  Future<Response<BuiltNoticeDetail>> updateNoticeByPatch(
+      int id, NoticeCreatePost body) {
+    final $url = '/noticeboard/${id}/';
+    final $body = body;
+    final $request = Request('PATCH', $url, client.baseUrl, body: $body);
+    return client.send<BuiltNoticeDetail, BuiltNoticeDetail>($request);
+  }
+
+  Future<Response> deleteNotice(int id) {
+    final $url = '/noticeboard/${id}/';
+    final $request = Request('DELETE', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
+
   Future<Response<GrievanceCount>> getGrievanceCount(String token) {
     final $url = '/grievance/count/';
     final $headers = {'Authorization': token};
