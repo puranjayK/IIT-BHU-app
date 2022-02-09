@@ -87,7 +87,8 @@ class AppConstants {
 
   static PostApiService service;
   static BuiltList<BuiltAllNotices> noticeSummaryFromDatabase;
-  static BuiltList<BuiltWorkshopSummaryPost> workshopFromDatabase;
+  static BuiltList<BuiltWorkshopSummaryPost> workshopFromDatabase =
+      BuiltList<BuiltWorkshopSummaryPost>();
   static BuiltList<BuiltAllCouncilsPost> councilsSummaryfromDatabase;
   static BuiltList<EntityListPost> entitiesSummaryFromDatabase;
 
@@ -303,8 +304,8 @@ class AppConstants {
     print('notices fetched and updated');
   }
 
-static Future<BuiltList<BuiltAllNotices>> getAllNoticesFromDatabase(
-      { bool refresh = false}) async {
+  static Future<BuiltList<BuiltAllNotices>> getAllNoticesFromDatabase(
+      {bool refresh = false}) async {
     DatabaseHelper helper = DatabaseHelper.instance;
     var database = await helper.database;
 
@@ -313,19 +314,17 @@ static Future<BuiltList<BuiltAllNotices>> getAllNoticesFromDatabase(
 
     if (notices == null || refresh == true) {
       try {
-        Response<BuiltList<BuiltAllNotices>> noticesSnapshots = await AppConstants.service
-            .getAllNotices()
-            .catchError((onError) {
+        Response<BuiltList<BuiltAllNotices>> noticesSnapshots =
+            await AppConstants.service.getAllNotices().catchError((onError) {
           print("Error in fetching notices: ${onError.toString()}");
         });
 
         if (noticesSnapshots.body != null) {
           notices = noticesSnapshots.body;
-        for (var notice in notices){
-          await DatabaseWrite.insertNoticesSummaryIntoDatabase(
-              notice:notice, db: database);
-        }
-          
+          for (var notice in notices) {
+            await DatabaseWrite.insertNoticesSummaryIntoDatabase(
+                notice: notice, db: database);
+          }
         }
       } on InternetConnectionException catch (error) {
         throw error;
