@@ -278,22 +278,28 @@ class AppConstants {
   }
 
   static Future updateAndPopulateNotices() async {
-    DatabaseHelper helper = DatabaseHelper.instance;
-    var database = await helper.database;
-
     print('fetching notice summaries from json for updation');
+
     try {
       Response<BuiltList<BuiltAllNotices>> noticesSnapshots =
           await service.getAllNotices();
-      //print(noticesSnapshots.body.toString());
-      if (noticesSnapshots.body != null) {
-        await DatabaseWrite.deleteAllNotices(db: database);
-        final notices = noticesSnapshots.body;
-        for (var notice in notices) {
-          await DatabaseWrite.insertNoticesSummaryIntoDatabase(
-              db: database, notice: notice);
-          //print("notice added: ${notice.id}");
+
+      if (!kIsWeb) {
+        DatabaseHelper helper = DatabaseHelper.instance;
+        var database = await helper.database;
+        //print(noticesSnapshots.body.toString());
+        if (noticesSnapshots.body != null) {
+          await DatabaseWrite.deleteAllNotices(db: database);
+          final notices = noticesSnapshots.body;
+          for (var notice in notices) {
+            await DatabaseWrite.insertNoticesSummaryIntoDatabase(
+                db: database, notice: notice);
+            //print("notice added: ${notice.id}");
+          }
+          noticeSummaryFromDatabase = notices;
         }
+      } else {
+        final notices = noticesSnapshots.body;
         noticeSummaryFromDatabase = notices;
       }
     } on InternetConnectionException catch (error) {
@@ -306,13 +312,34 @@ class AppConstants {
 
   static Future<BuiltList<BuiltAllNotices>> getAllNoticesFromDatabase(
       {bool refresh = false}) async {
-    DatabaseHelper helper = DatabaseHelper.instance;
-    var database = await helper.database;
+    BuiltList<BuiltAllNotices> notices = BuiltList<BuiltAllNotices>();
+    if (!kIsWeb) {
+      DatabaseHelper helper = DatabaseHelper.instance;
+      var database = await helper.database;
 
-    BuiltList<BuiltAllNotices> notices =
-        await DatabaseQuery.getAllNoticesSummary(db: database);
+      notices = await DatabaseQuery.getAllNoticesSummary(db: database);
 
-    if (notices == null || refresh == true) {
+      if (notices == null || refresh == true) {
+        try {
+          Response<BuiltList<BuiltAllNotices>> noticesSnapshots =
+              await AppConstants.service.getAllNotices().catchError((onError) {
+            print("Error in fetching notices: ${onError.toString()}");
+          });
+
+          if (noticesSnapshots.body != null) {
+            notices = noticesSnapshots.body;
+            for (var notice in notices) {
+              await DatabaseWrite.insertNoticesSummaryIntoDatabase(
+                  notice: notice, db: database);
+            }
+          }
+        } on InternetConnectionException catch (error) {
+          throw error;
+        } catch (err) {
+          print(err);
+        }
+      }
+    } else {
       try {
         Response<BuiltList<BuiltAllNotices>> noticesSnapshots =
             await AppConstants.service.getAllNotices().catchError((onError) {
@@ -321,10 +348,6 @@ class AppConstants {
 
         if (noticesSnapshots.body != null) {
           notices = noticesSnapshots.body;
-          for (var notice in notices) {
-            await DatabaseWrite.insertNoticesSummaryIntoDatabase(
-                notice: notice, db: database);
-          }
         }
       } on InternetConnectionException catch (error) {
         throw error;
@@ -338,22 +361,39 @@ class AppConstants {
 
   static Future getNoticeDetailFromDatabase(
       {@required int noticeId, bool refresh = true}) async {
-    DatabaseHelper helper = DatabaseHelper.instance;
-    var database = await helper.database;
+    BuiltNoticeDetail noticePost = BuiltNoticeDetail();
+    if (!kIsWeb) {
+      try {
+        DatabaseHelper helper = DatabaseHelper.instance;
+        var database = await helper.database;
 
-    BuiltNoticeDetail noticePost =
-        await DatabaseQuery.getNoticeDetail(db: database, noticeId: noticeId);
-    print('fetching notice detail from json for updation');
-    if (noticePost == null || refresh == true) {
+        noticePost = await DatabaseQuery.getNoticeDetail(
+            db: database, noticeId: noticeId);
+        print('fetching notice detail from json for updation');
+        if (noticePost == null || refresh == true) {
+          Response<BuiltNoticeDetail> noticeSnapshots = await AppConstants
+              .service
+              .getNotice(AppConstants.djangoToken, noticeId);
+          print({noticeSnapshots.body.toString()});
+          if (noticeSnapshots.body != null) {
+            noticePost = noticeSnapshots.body;
+
+            await DatabaseWrite.insertNoticeDetailIntoDatabase(
+                notice: noticePost, db: database);
+          }
+        }
+      } on InternetConnectionException catch (error) {
+        throw error;
+      } catch (err) {
+        print(err);
+      }
+    } else {
       try {
         Response<BuiltNoticeDetail> noticeSnapshots = await AppConstants.service
             .getNotice(AppConstants.djangoToken, noticeId);
         print({noticeSnapshots.body.toString()});
         if (noticeSnapshots.body != null) {
           noticePost = noticeSnapshots.body;
-
-          await DatabaseWrite.insertNoticeDetailIntoDatabase(
-              notice: noticePost, db: database);
         }
       } on InternetConnectionException catch (error) {
         throw error;
